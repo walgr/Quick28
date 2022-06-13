@@ -50,13 +50,14 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
     @Override
     public QuickViewHolder<QuickItemData> onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         QuickItemData findData = findDataByViewType(i);
-        if (findData instanceof QuickItemDataBinding) {
+        if (findData instanceof QuickBindingData) {
             HolderBindingClass holderAnnotationClass = findData.getClass().getAnnotation(HolderBindingClass.class);
             HolderBindingLayout holderAnnotationLayout = findData.getClass().getAnnotation(HolderBindingLayout.class);
             if (holderAnnotationLayout != null) {
-                QuickViewBindingHolder bindingHolder = new QuickViewBindingHolder<>(
-                        viewGroup, holderAnnotationLayout.layout(), (QuickItemDataBinding)findData
+                QuickViewBindingHolder bindingHolder = new QuickViewBindingHolder(
+                        viewGroup, holderAnnotationLayout.layout()
                 );
+                bindingHolder.setViewData((QuickBindingData)findData);
                 bindingHolder.onCreateViewHolder(bindingHolder.itemView);
                 return bindingHolder;
             }
@@ -64,7 +65,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
                 try {
                     Constructor<?> bindingHolderCls = holderAnnotationClass.holderClass().getConstructor(ViewGroup.class);
                     QuickViewBindingHolder bindingHolder = (QuickViewBindingHolder) bindingHolderCls.newInstance(viewGroup);
-                    bindingHolder.setViewData((QuickItemDataBinding)findData);
+                    bindingHolder.setViewData((QuickBindingData)findData);
                     bindingHolder.onCreateViewHolder(bindingHolder.itemView);
                     return bindingHolder;
                 } catch (NoSuchMethodException e) {

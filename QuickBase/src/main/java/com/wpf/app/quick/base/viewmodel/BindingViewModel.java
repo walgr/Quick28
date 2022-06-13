@@ -3,6 +3,7 @@ package com.wpf.app.quick.base.viewmodel;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ViewDataBinding;
+import android.support.annotation.Nullable;
 
 /**
  * Created by 王朋飞 on 2022/5/20.
@@ -15,11 +16,11 @@ public class BindingViewModel<T extends ViewDataBinding> extends ViewModel imple
         mViewBinding = viewBinding;
     }
 
-    public T getViewBinding() {
+    public @Nullable T getViewBinding() {
         return mViewBinding;
     }
 
-    public void onBindingCreate(T mViewBinding) {
+    public void onBindingCreate(@Nullable T mViewBinding) {
 
     }
 }

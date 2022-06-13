@@ -6,6 +6,7 @@ import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
 
 import com.wpf.app.quick.base.constant.BRConstant;
+import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
 import com.wpf.app.quick.base.utils.ViewMolderEx;
 import com.wpf.app.quick.base.viewmodel.BindingViewModel;
 
@@ -14,11 +15,14 @@ import com.wpf.app.quick.base.viewmodel.BindingViewModel;
  */
 public class ViewModelBindingActivity<VM extends BindingViewModel<VB>, VB extends ViewDataBinding> extends BaseActivity {
 
-    private VM mViewModel;
-    private @LayoutRes int layoutId;
+    protected VM mViewModel;
 
     public ViewModelBindingActivity(int layoutId) {
         this.layoutId = layoutId;
+    }
+
+    public ViewModelBindingActivity(int layoutId, String activityTitle) {
+        super(layoutId, activityTitle);
     }
 
     public void setViewModel(VM viewModel) {
@@ -26,18 +30,43 @@ public class ViewModelBindingActivity<VM extends BindingViewModel<VB>, VB extend
         setViewBinding();
     }
 
+    private VB viewBinding = null;
+
+    public VB getViewBinding() {
+        return viewBinding;
+    }
+
     public void setViewBinding() {
-        mViewModel.setViewBinding(DataBindingUtil.setContentView(this, layoutId));
-        mViewModel.getViewBinding().setLifecycleOwner(this);
-        mViewModel.getViewBinding().setVariable(BRConstant.viewModel, mViewModel);
-        mViewModel.getViewBinding().executePendingBindings();
+        viewBinding = DataBindingUtil.setContentView(this, layoutId);
+        viewBinding.setLifecycleOwner(this);
+        viewBinding.setVariable(BRConstant.viewModel, mViewModel);
+        viewBinding.executePendingBindings();
+        if (mViewModel != null) {
+            mViewModel.setViewBinding(viewBinding);
+        }
     }
 
     @Override
     protected void dealContentView() {
-        mViewModel = new ViewModelProvider(this,
-                new ViewModelProvider.AndroidViewModelFactory(getApplication()))
-                .get(ViewMolderEx.getVm0Clazz(this));
-        mViewModel.onBindingCreate(mViewModel.getViewBinding());
+        Class<VM> viewModelCls = ViewMolderEx.getVm0Clazz(this);
+        if (viewModelCls != null) {
+            setViewModel(new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(viewModelCls));
+            QuickBindHelper.bind(this, mViewModel);
+            if (mViewModel != null) {
+                mViewModel.onBindingCreate(viewBinding);
+            }
+        } else {
+            setViewBinding();
+        }
+    }
+
+    @Override
+    public void initView() {
+        super.initView();
+        initView(viewBinding);
+    }
+
+    public void initView(VB viewDataBinding) {
+
     }
 }

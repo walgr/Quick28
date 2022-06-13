@@ -14,22 +14,26 @@ import java.util.Set;
 /**
  * Created by 王朋飞 on 2022/5/20.
  */
-public class QuickViewBindingHolder<T extends QuickItemDataBinding<VB>, VB extends ViewDataBinding>
-extends QuickViewHolder<T> {
+public class QuickViewBindingHolder<VM extends QuickBindingData<VB>, VB extends ViewDataBinding> extends QuickViewHolder<VM> {
 
-    protected @LayoutRes int layoutId;
+    protected @LayoutRes
+    int layoutId;
 
-    protected T mViewData;
+    protected VM mViewData;
 
     protected Map<Integer, Object> variableBinding;
 
-    QuickViewBindingHolder(ViewGroup mParent, @LayoutRes int layoutId, T mViewData) {
+    public QuickViewBindingHolder(ViewGroup mParent, @LayoutRes int layoutId) {
         super(mParent, layoutId);
         this.layoutId = layoutId;
-        this.mViewData = mViewData;
     }
 
-    public void setViewData(T viewData) {
+    public QuickViewBindingHolder(ViewGroup mParent, @LayoutRes int layoutId, boolean dealBindView) {
+        super(mParent, layoutId, dealBindView);
+        this.layoutId = layoutId;
+    }
+
+    public void setViewData(VM viewData) {
         mViewData = viewData;
     }
 
@@ -37,6 +41,7 @@ extends QuickViewHolder<T> {
 
     @Override
     public void onCreateViewHolder(View itemView) {
+        super.onCreateViewHolder(itemView);
         mViewBinding = DataBindingUtil.bind(itemView);
         mViewData.onCreateHolderEnd(this);
         onCreateHolderEnd(itemView);
@@ -47,8 +52,8 @@ extends QuickViewHolder<T> {
     }
 
     @Override
-    public void onBindViewHolder(QuickAdapter adapter, T data, int position) {
-        setQuickAdapterListener((QuickAdapterListener<T>) adapter.getQuickAdapterListener());
+    public void onBindViewHolder(QuickAdapter adapter, VM data, int position) {
+        setQuickAdapterListener((QuickAdapterListener<VM>) adapter.getQuickAdapterListener());
         if (mViewBinding != null) {
             mViewBinding.setVariable(BRConstant.data, data);
             mViewBinding.setVariable(BRConstant.adapter, adapter);
@@ -61,5 +66,9 @@ extends QuickViewHolder<T> {
             }
             mViewBinding.executePendingBindings();
         }
+    }
+
+    public VM getViewData() {
+        return mViewData;
     }
 }

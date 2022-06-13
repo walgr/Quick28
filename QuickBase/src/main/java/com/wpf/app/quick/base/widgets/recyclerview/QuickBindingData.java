@@ -7,16 +7,19 @@ import android.support.annotation.LayoutRes;
 /**
  * Created by 王朋飞 on 2022/5/20.
  */
-public class QuickItemDataBinding<VB extends ViewDataBinding> extends QuickItemData implements LifecycleObserver {
+public class QuickBindingData<VB extends ViewDataBinding> extends QuickItemData implements LifecycleObserver {
 
     protected @LayoutRes int layoutId;
 
-    QuickItemDataBinding(@LayoutRes int layoutId) {
+    public QuickBindingData() {
+    }
+
+    QuickBindingData(@LayoutRes int layoutId) {
         super();
         this.layoutId = layoutId;
     }
 
-    public void onCreateHolderEnd(QuickViewBindingHolder<? extends QuickItemDataBinding<VB>, VB > mViewHolder) {
+    public void onCreateHolderEnd(QuickViewBindingHolder<? extends QuickBindingData<VB>, VB> viewHolder) {
 
     }
 }
