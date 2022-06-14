@@ -53,7 +53,7 @@ public class MainActivity extends ViewModelBindingActivity<MainViewModel, Activi
     }
 
     public void gotoData(View view) {
-        startActivity(IntentDataTestActivity.class, new HashMap<>() {{
+        startActivity(IntentDataTestActivity.class, new HashMap<String, Object>() {{
             put("activityTitle", "数据测试页");
             put("intD", 2);
             put("floatD", 3f);
@@ -62,19 +62,19 @@ public class MainActivity extends ViewModelBindingActivity<MainViewModel, Activi
             put("byteD", (byte) 6);
             put("data", new MyMessage("31"));
             put("data1", new TestModel("41"));
-            put("map", new HashMap<>() {{
+            put("map", new HashMap<String, String>() {{
                 put("map1", "51");
             }});
-            put("list", new ArrayList<>() {{
+            put("list", new ArrayList<String>() {{
                 add("61");
                 add("62");
             }});
             put("array", new String[]{"71", "72"});
-            put("listS", new ArrayList<>() {{
+            put("listS", new ArrayList<MyMessage>() {{
                 add(new MyMessage("81"));
                 add(new MyMessage("82"));
             }});
-            put("listP", new ArrayList<>() {{
+            put("listP", new ArrayList<TestModel>() {{
                 add(new TestModel("91"));
                 add(new TestModel("92"));
             }});

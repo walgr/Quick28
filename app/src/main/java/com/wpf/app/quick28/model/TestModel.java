@@ -35,7 +35,7 @@ public class TestModel extends QuickItemData implements Parcelable {
         text = in.readString();
     }
 
-    public static final Creator<TestModel> CREATOR = new Creator<>() {
+    public static final Creator<TestModel> CREATOR = new Creator<TestModel>() {
         @Override
         public TestModel createFromParcel(Parcel in) {
             return new TestModel(in);

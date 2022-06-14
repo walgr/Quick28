@@ -3,7 +3,6 @@ package com.wpf.app.quick.base.activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.support.annotation.LayoutRes;
 
 import com.wpf.app.quick.base.constant.BRConstant;
 import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
