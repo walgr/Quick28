@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
+import com.wpf.app.quick.base.utils.ActivityUtils;
+import com.wpf.app.quick.base.widgets.viewpager.ViewPagerSize;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,20 +29,11 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     private View layoutView;
     String activityTitle = "";
 
-    BaseActivity() {
-
-    }
-
     BaseActivity(@LayoutRes int layoutId) {
         this.layoutId = layoutId;
     }
 
     BaseActivity(View layoutView) {
-        this.layoutView = layoutView;
-    }
-
-    BaseActivity(@LayoutRes int layoutId, View layoutView) {
-        this.layoutId = layoutId;
         this.layoutView = layoutView;
     }
 
@@ -50,12 +43,6 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     }
 
     public BaseActivity(View layoutView, String activityTitle) {
-        this.layoutView = layoutView;
-        this.activityTitle = activityTitle;
-    }
-
-    public BaseActivity(int layoutId, View layoutView, String activityTitle) {
-        this.layoutId = layoutId;
         this.layoutView = layoutView;
         this.activityTitle = activityTitle;
     }
@@ -95,20 +82,6 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     }
 
     public <T extends Activity> void startActivity(Class<T> activityCls, Map<String, Object> data) {
-        Intent intent = new Intent(this, activityCls);
-        if (data != null) {
-            Set<String> keys = data.keySet();
-            for (String key : keys) {
-                Object value = data.get(key);
-                if (value instanceof Serializable) {
-                    intent.putExtra(key, (Serializable) value);
-                } else if (value instanceof Parcelable) {
-                    intent.putExtra(key, (Parcelable) value);
-                } else if (value instanceof ArrayList) {
-                    intent.putParcelableArrayListExtra(key, (ArrayList<? extends Parcelable>) value);
-                }
-            }
-        }
-        startActivity(intent);
+        ActivityUtils.startActivity(this, activityCls, data);
     }
 }

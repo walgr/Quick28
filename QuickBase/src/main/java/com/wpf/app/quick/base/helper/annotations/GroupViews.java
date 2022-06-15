@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class GroupViews {
 
-    ArrayList<View> viewList = new ArrayList<>();
+    public ArrayList<View> viewList = new ArrayList<>();
 
     public void showAll() {
         for (View view: viewList) {

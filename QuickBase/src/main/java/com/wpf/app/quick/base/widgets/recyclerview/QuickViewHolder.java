@@ -14,9 +14,11 @@ import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
 /**
  * Created by 王朋飞 on 2022/5/20.
  */
-public abstract class QuickViewHolder<T extends QuickItemData> extends RecyclerView.ViewHolder {
+public class QuickViewHolder<T extends QuickItemData> extends RecyclerView.ViewHolder {
 
     boolean dealBindView = false;
+
+    protected QuickAdapter mQuickAdapter;
 
     public QuickViewHolder(ViewGroup mParent, @LayoutRes int layoutId) {
         super(LayoutInflater.from(mParent.getContext()).inflate(layoutId, mParent, false));
@@ -27,8 +29,6 @@ public abstract class QuickViewHolder<T extends QuickItemData> extends RecyclerV
         this.dealBindView = dealBindView;
     }
 
-    protected QuickAdapterListener<T> mQuickAdapterListener;
-
     @CallSuper
     public void onCreateViewHolder(View itemView) {
         if (dealBindView) {
@@ -36,18 +36,31 @@ public abstract class QuickViewHolder<T extends QuickItemData> extends RecyclerV
         }
     }
 
-    public abstract void onBindViewHolder(QuickAdapter adapter, T data, int position);
-
-    public @Nullable QuickAdapterListener<QuickItemData> getAdapterClickListener() {
-        if (mQuickAdapterListener == null) return null;
-        return (QuickAdapterListener<QuickItemData>)mQuickAdapterListener;
+    @CallSuper
+    public void onBindViewHolder(QuickAdapter adapter, T data, int position) {
+        this.mQuickAdapter = adapter;
     }
 
-    public void setQuickAdapterListener(@NonNull QuickAdapterListener<T> quickAdapterListener) {
-        mQuickAdapterListener = quickAdapterListener;
+    public @Nullable
+    QuickAdapterListener<QuickItemData> getAdapterClickListener() {
+        if (this.mQuickAdapter == null || this.mQuickAdapter.getQuickAdapterListener() == null)
+            return null;
+        return (QuickAdapterListener<QuickItemData>) this.mQuickAdapter.getQuickAdapterListener();
+    }
+
+    public void itemViewClick(View clickView) {
+        if (getAdapterClickListener() != null) {
+            getAdapterClickListener().onItemClick(clickView, getViewData(), getAdapterPosition());
+        }
     }
 
     public View getItemView() {
         return itemView;
+    }
+
+    public @Nullable
+    T getViewData() {
+        if (mQuickAdapter == null || mQuickAdapter.getData() == null) return null;
+        return (T) mQuickAdapter.getData().get(getAdapterPosition());
     }
 }

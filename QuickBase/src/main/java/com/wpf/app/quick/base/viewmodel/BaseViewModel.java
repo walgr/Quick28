@@ -9,9 +9,7 @@ import com.wpf.app.quick.base.activity.BaseView;
  */
 public class BaseViewModel<T extends BaseView> extends ViewModel {
 
-    private T view;
-
-    public void onModelCreate(T view) {
+    public void onViewCreated(T view) {
 
     }
 }

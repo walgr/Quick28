@@ -14,12 +14,12 @@ import java.util.Set;
 /**
  * Created by 王朋飞 on 2022/5/20.
  */
-public class QuickViewBindingHolder<VM extends QuickBindingData<VB>, VB extends ViewDataBinding> extends QuickViewHolder<VM> {
+public class QuickViewBindingHolder<T extends QuickBindingData<VB>, VB extends ViewDataBinding> extends QuickViewHolder<T> {
 
     protected @LayoutRes
     int layoutId;
 
-    protected VM mViewData;
+    protected T mViewData;
 
     protected Map<Integer, Object> variableBinding;
 
@@ -33,7 +33,7 @@ public class QuickViewBindingHolder<VM extends QuickBindingData<VB>, VB extends 
         this.layoutId = layoutId;
     }
 
-    public void setViewData(VM viewData) {
+    public void setViewData(T viewData) {
         mViewData = viewData;
     }
 
@@ -52,8 +52,8 @@ public class QuickViewBindingHolder<VM extends QuickBindingData<VB>, VB extends 
     }
 
     @Override
-    public void onBindViewHolder(QuickAdapter adapter, VM data, int position) {
-        setQuickAdapterListener((QuickAdapterListener<VM>) adapter.getQuickAdapterListener());
+    public void onBindViewHolder(QuickAdapter adapter, T data, int position) {
+        super.onBindViewHolder(adapter, data, position);
         if (mViewBinding != null) {
             mViewBinding.setVariable(BRConstant.data, data);
             mViewBinding.setVariable(BRConstant.adapter, adapter);
@@ -68,7 +68,7 @@ public class QuickViewBindingHolder<VM extends QuickBindingData<VB>, VB extends 
         }
     }
 
-    public VM getViewData() {
+    public T getViewData() {
         return mViewData;
     }
 }

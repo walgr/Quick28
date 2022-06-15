@@ -17,7 +17,7 @@ public class ViewModelBindingActivity<VM extends BindingViewModel<VB>, VB extend
     protected VM mViewModel;
 
     public ViewModelBindingActivity(int layoutId) {
-        this.layoutId = layoutId;
+        super(layoutId);
     }
 
     public ViewModelBindingActivity(int layoutId, String activityTitle) {
