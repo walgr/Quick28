@@ -3,6 +3,7 @@ package com.wpf.app.quick.base.activity;
 import android.annotation.SuppressLint;
 import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
@@ -18,16 +19,16 @@ public class RModelFragment<VM extends BaseViewModel<H>, H extends BaseView> ext
 
     protected QuickRecyclerView mRecyclerView;
     protected @IdRes
-    int viewId = 0;
+    int quickListId = 0;
 
     public RModelFragment() {
         super(R.layout.fragment_recyclerview);
     }
 
     @SuppressLint("ValidFragment")
-    public RModelFragment(int layoutId, @IdRes int viewId) {
+    public RModelFragment(int layoutId, @IdRes int quickListId) {
         super(layoutId);
-        this.viewId = viewId;
+        this.quickListId = quickListId;
     }
 
     @SuppressLint("ValidFragment")
@@ -36,37 +37,18 @@ public class RModelFragment<VM extends BaseViewModel<H>, H extends BaseView> ext
     }
 
     @SuppressLint("ValidFragment")
-    public RModelFragment(int layoutId, @IdRes int viewId, String title) {
+    public RModelFragment(@LayoutRes int layoutId, @IdRes int quicckListId, String title) {
         super(layoutId, title);
-        this.viewId = viewId;
+        this.quickListId = quicckListId;
     }
 
     @CallSuper
     @Override
     public void initView() {
         if (getView() != null) {
-            mRecyclerView = getView().findViewById(viewId == 0 ? R.id.recyclerView : viewId);
+            mRecyclerView = getView().findViewById(quickListId == 0 ? R.id.recyclerView : quickListId);
         }
         super.initView();
-        addRefreshView();
-    }
-
-    private void addRefreshView() {
-        if (viewId != 0) return;
-        ViewGroup refreshView = addParentRefreshView();
-        if (refreshView != null) {
-            if (mRecyclerView != null && mRecyclerView.getParent() instanceof ViewGroup) {
-                ViewGroup parentView = (ViewGroup) mRecyclerView.getParent();
-                parentView.removeView(mRecyclerView);
-                refreshView.addView(mRecyclerView);
-                parentView.addView(refreshView);
-            }
-        }
-    }
-
-    protected @NonNull
-    ViewGroup addParentRefreshView() {
-        return null;
     }
 
     public QuickRecyclerView getRecyclerView() {

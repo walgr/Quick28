@@ -32,6 +32,38 @@ public class ViewModelActivity<VM extends BaseViewModel<H>, H extends BaseView> 
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mViewModel != null) {
+            mViewModel.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mViewModel != null) {
+            mViewModel.onPause();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mViewModel != null) {
+            mViewModel.onStop();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mViewModel != null) {
+            mViewModel.onDestroy();
+        }
+    }
+
+    @Override
     protected void dealContentView() {
         Class<VM> vmClass = ViewMolderEx.getVm0Clazz(this);
         if (vmClass != null) {
@@ -39,6 +71,7 @@ public class ViewModelActivity<VM extends BaseViewModel<H>, H extends BaseView> 
                     new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                     .get(vmClass);
             QuickBindHelper.bind(this, mViewModel);
+            mViewModel.baseView = (H) this;
             mViewModel.onViewCreated((H) this);
         }
     }

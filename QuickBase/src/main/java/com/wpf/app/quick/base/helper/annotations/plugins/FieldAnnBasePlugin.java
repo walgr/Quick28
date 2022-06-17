@@ -1,6 +1,12 @@
 package com.wpf.app.quick.base.helper.annotations.plugins;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 
 import java.lang.reflect.Field;
 
@@ -10,5 +16,18 @@ import java.lang.reflect.Field;
  */
 public interface FieldAnnBasePlugin {
 
-    void dealField(Object obj, ViewModel viewModel, Field field);
+    default @NonNull Context getContext(@Nullable Object obj) {
+        if (obj == null) return null;
+        Context context = null;
+        if (obj instanceof Activity) {
+            context = (Context) obj;
+        } else if (obj instanceof Fragment) {
+            context = ((Fragment) obj).getContext();
+        } else if (obj instanceof Dialog) {
+            context = ((Dialog) obj).getContext();
+        }
+        return context;
+    }
+
+    void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field);
 }

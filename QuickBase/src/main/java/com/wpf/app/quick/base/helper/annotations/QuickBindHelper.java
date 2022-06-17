@@ -15,6 +15,7 @@ import com.wpf.app.quick.base.helper.annotations.plugins.BindFragmentAnnPlugin;
 import com.wpf.app.quick.base.helper.annotations.plugins.BindFragmentsAnnPlugin;
 import com.wpf.app.quick.base.helper.annotations.plugins.FieldAnnBasePlugin;
 import com.wpf.app.quick.base.helper.annotations.plugins.FindViewAnnPlugin;
+import com.wpf.app.quick.base.helper.annotations.plugins.LoadSpPlugin;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -38,8 +39,10 @@ public class QuickBindHelper {
     }
 
     static {
+        //TODO 暂未支持moduleR
         registerPlugin(new FindViewAnnPlugin());
         registerPlugin(new AutoGetAnnPlugin());
+        registerPlugin(new LoadSpPlugin());
         registerPlugin(new BindFragmentsAnnPlugin());
         registerPlugin(new BindFragmentAnnPlugin());
     }
@@ -62,6 +65,11 @@ public class QuickBindHelper {
 
     public static void bind(RecyclerView.ViewHolder viewHolder) {
         dealAllField(viewHolder, null);
+    }
+
+    //一直只能获取数据
+    public static void bind(Object object) {
+        dealAllField(object, null);
     }
 
     private static void dealAllField(Object obj, ViewModel viewModel) {
@@ -97,8 +105,8 @@ public class QuickBindHelper {
                     break;
                 }
             }
-        }
-        if (obj instanceof Fragment) {
+            return result;
+        } else if (obj instanceof Fragment) {
             while (curCls != null) {
                 result.addAll(Arrays.asList(curCls.getDeclaredFields()));
                 curCls = ((Class<?>) curCls).getSuperclass();
@@ -106,6 +114,9 @@ public class QuickBindHelper {
                     break;
                 }
             }
+            return result;
+        } else {
+            result.addAll(Arrays.asList(curCls.getDeclaredFields()));
         }
         return result;
 }

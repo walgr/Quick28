@@ -20,6 +20,10 @@ public class QuickViewHolder<T extends QuickItemData> extends RecyclerView.ViewH
 
     protected QuickAdapter mQuickAdapter;
 
+    public QuickViewHolder(ViewGroup mParent) {
+        super(LayoutInflater.from(mParent.getContext()).inflate(0, mParent, false));
+    }
+
     public QuickViewHolder(ViewGroup mParent, @LayoutRes int layoutId) {
         super(LayoutInflater.from(mParent.getContext()).inflate(layoutId, mParent, false));
     }
@@ -37,7 +41,7 @@ public class QuickViewHolder<T extends QuickItemData> extends RecyclerView.ViewH
     }
 
     @CallSuper
-    public void onBindViewHolder(QuickAdapter adapter, T data, int position) {
+    public void onBindViewHolder(QuickAdapter adapter, @NonNull T data, int position) {
         this.mQuickAdapter = adapter;
     }
 

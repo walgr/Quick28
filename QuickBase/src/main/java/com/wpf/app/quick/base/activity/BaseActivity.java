@@ -29,11 +29,14 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     private View layoutView;
     String activityTitle = "";
 
-    BaseActivity(@LayoutRes int layoutId) {
+//    public BaseActivity() {
+//    }
+
+    public BaseActivity(@LayoutRes int layoutId) {
         this.layoutId = layoutId;
     }
 
-    BaseActivity(View layoutView) {
+    public BaseActivity(View layoutView) {
         this.layoutView = layoutView;
     }
 

@@ -34,24 +34,6 @@ public class RViewModelBindingFragment<VM extends BindingViewModel<VB>, VB exten
             mRecyclerView = getView().findViewById(R.id.recyclerView);
         }
         super.initView();
-        addRefreshView();
-    }
-
-    private void addRefreshView() {
-        ViewGroup refreshView = addParentRefreshView();
-        if (refreshView != null) {
-            if (mRecyclerView != null && mRecyclerView.getParent() instanceof ViewGroup) {
-                ViewGroup parentView = (ViewGroup) mRecyclerView.getParent();
-                parentView.removeView(mRecyclerView);
-                refreshView.addView(mRecyclerView);
-                parentView.addView(refreshView);
-            }
-        }
-    }
-
-    protected @NonNull
-    ViewGroup addParentRefreshView() {
-        return null;
     }
 
     public QuickRecyclerView getRecyclerView() {

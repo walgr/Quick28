@@ -2,6 +2,8 @@ package com.wpf.app.quick.base.helper.annotations.plugins;
 
 import android.app.Activity;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -22,14 +24,14 @@ import java.util.List;
 public class BindFragmentsAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(Object obj, ViewModel viewModel, Field field) {
+    public void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         try {
             BindFragments bindFragmentsAnn = field.getAnnotation(BindFragments.class);
             if (bindFragmentsAnn != null) {
                 field.setAccessible(true);
-                if (field.get(viewModel == null ? obj : viewModel) instanceof ViewPager) {
-                    ViewPager viewPager = (ViewPager) field.get(viewModel == null ? obj : viewModel);
-                    if (viewPager == null) return;
+                Object viewPagerObj = field.get(viewModel == null ? obj : viewModel);
+                if (viewPagerObj instanceof ViewPager) {
+                    ViewPager viewPager = (ViewPager) viewPagerObj;
                     if (bindFragmentsAnn.limit() > 0) {
                         viewPager.setOffscreenPageLimit(bindFragmentsAnn.limit());
                     }

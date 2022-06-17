@@ -9,7 +9,25 @@ import com.wpf.app.quick.base.activity.BaseView;
  */
 public class BaseViewModel<T extends BaseView> extends ViewModel {
 
-    public void onViewCreated(T view) {
+    public T baseView;
+
+    public void onResume() {
+
+    }
+
+    public void onPause() {
+
+    }
+
+    public void onStop() {
+
+    }
+
+    public void onDestroy() {
+
+    }
+
+    public void onViewCreated(T baseView) {
 
     }
 }

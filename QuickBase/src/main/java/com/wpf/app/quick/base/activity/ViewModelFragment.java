@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -22,7 +23,7 @@ public class ViewModelFragment<VM extends BaseViewModel<H>, H extends BaseView> 
 
     protected VM mViewModel;
 
-    public ViewModelFragment(int layoutId) {
+    public ViewModelFragment(@LayoutRes int layoutId) {
         super(layoutId);
     }
 
@@ -30,7 +31,7 @@ public class ViewModelFragment<VM extends BaseViewModel<H>, H extends BaseView> 
         super(layoutView);
     }
 
-    public ViewModelFragment(int layoutId, String title) {
+    public ViewModelFragment(@LayoutRes int layoutId, String title) {
         super(layoutId, title);
     }
 
@@ -52,6 +53,7 @@ public class ViewModelFragment<VM extends BaseViewModel<H>, H extends BaseView> 
                     new ViewModelProvider.AndroidViewModelFactory((Application) getContext().getApplicationContext()))
                     .get(vmClass);
             QuickBindHelper.bind(this, mViewModel);
+            mViewModel.baseView = (H) this;
             mViewModel.onViewCreated((H) this);
         }
     }

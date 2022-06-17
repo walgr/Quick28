@@ -54,14 +54,23 @@ public class BaseFragment extends Fragment implements BaseView {
         setArguments(bundle);
     }
 
+    /**
+     * 从ViewModelActivity获取数据
+     */
     public @NonNull Bundle getInitBundle(ViewModelActivity viewModelActivity, int position) {
         return null;
     }
 
+    /**
+     * 从Activity获取数据
+     */
     public @NonNull Bundle getInitBundle(Activity activity, int position) {
         return null;
     }
 
+    /**
+     * 从Fragment获取数据
+     */
     public @NonNull Bundle getInitBundle(Fragment fragment, int position) {
         return null;
     }

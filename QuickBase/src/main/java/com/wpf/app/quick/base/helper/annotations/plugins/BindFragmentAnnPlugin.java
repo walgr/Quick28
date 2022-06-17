@@ -12,17 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.wpf.app.quick.base.activity.BaseFragment;
-import com.wpf.app.quick.base.activity.BaseView;
 import com.wpf.app.quick.base.activity.ViewModelActivity;
-import com.wpf.app.quick.base.activity.ViewModelFragment;
 import com.wpf.app.quick.base.helper.annotations.BindFragment;
-import com.wpf.app.quick.base.viewmodel.BaseViewModel;
 import com.wpf.app.quick.base.widgets.viewpager.ViewPagerSize;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by 王朋飞 on 2022/6/15.
@@ -30,14 +25,14 @@ import java.util.List;
 public class BindFragmentAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(Object obj, ViewModel viewModel, Field field) {
+    public void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         try {
             BindFragment bindFragmentAnn = field.getAnnotation(BindFragment.class);
             if (bindFragmentAnn != null) {
                 field.setAccessible(true);
-                if (field.get(viewModel == null ? obj : viewModel) instanceof ViewPager) {
-                    ViewPager viewPager = (ViewPager) field.get(viewModel == null ? obj : viewModel);
-                    if (viewPager == null) return;
+                Object viewPagerObj = field.get(viewModel == null ? obj : viewModel);
+                if (viewPagerObj instanceof ViewPager) {
+                    ViewPager viewPager = (ViewPager) viewPagerObj;
                     if (bindFragmentAnn.limit() > 0) {
                         viewPager.setOffscreenPageLimit(bindFragmentAnn.limit());
                     }

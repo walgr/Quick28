@@ -19,6 +19,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
     private QuickAdapterListener<? extends QuickItemData> mQuickAdapterListener;
 
     public void setNewData(@Nullable List<? extends QuickItemData> mDataList) {
+        cleanAll();
         appendList(mDataList);
         notifyDataSetChanged();
     }

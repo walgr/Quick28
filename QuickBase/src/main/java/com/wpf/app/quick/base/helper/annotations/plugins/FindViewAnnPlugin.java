@@ -25,7 +25,7 @@ import java.lang.reflect.Field;
 public class FindViewAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(Object obj, ViewModel viewModel, Field field) {
+    public void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         setFieldView(obj, viewModel, field);
     }
 

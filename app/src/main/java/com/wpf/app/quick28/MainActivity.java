@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.TextView;
 
+import com.wpf.app.quick.base.activity.TestActivity;
 import com.wpf.app.quick.base.activity.ViewModelBindingActivity;
 import com.wpf.app.quick.base.helper.annotations.FindView;
 import com.wpf.app.quick28.databinding.ActivityMainBinding;
@@ -42,6 +43,10 @@ public class MainActivity extends ViewModelBindingActivity<MainViewModel, Activi
         text1.postDelayed(() -> text1.setText(System.currentTimeMillis() + ""), 1000);
         text2.postDelayed(() -> text2.setText(System.currentTimeMillis() + ""), 1000);
         text3.postDelayed(() -> text3.setText(System.currentTimeMillis() + ""), 1000);
+    }
+
+    public void gotoR2Test(View view) {
+        startActivity(TestActivity.class);
     }
 
     public void gotoGlide(View view) {

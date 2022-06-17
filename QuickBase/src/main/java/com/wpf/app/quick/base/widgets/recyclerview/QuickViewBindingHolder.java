@@ -3,6 +3,7 @@ package com.wpf.app.quick.base.widgets.recyclerview;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -52,7 +53,7 @@ public class QuickViewBindingHolder<T extends QuickBindingData<VB>, VB extends V
     }
 
     @Override
-    public void onBindViewHolder(QuickAdapter adapter, T data, int position) {
+    public void onBindViewHolder(QuickAdapter adapter, @NonNull T data, int position) {
         super.onBindViewHolder(adapter, data, position);
         if (mViewBinding != null) {
             mViewBinding.setVariable(BRConstant.data, data);
