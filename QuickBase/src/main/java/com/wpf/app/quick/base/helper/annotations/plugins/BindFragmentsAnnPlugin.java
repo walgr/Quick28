@@ -1,9 +1,11 @@
 package com.wpf.app.quick.base.helper.annotations.plugins;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -41,6 +43,7 @@ public class BindFragmentsAnnPlugin implements FieldAnnBasePlugin {
                     } else if (obj instanceof Fragment) {
                         fragmentManager = ((Fragment) obj).getChildFragmentManager();
                     }
+                    if (fragmentManager == null) return;
                     if (bindFragmentsAnn.withState()) {
                         viewPager.setAdapter(new FragmentsStateAdapter(fragmentManager, getFragment(obj, bindFragmentsAnn.fragments())));
                     } else {
@@ -61,9 +64,9 @@ public class BindFragmentsAnnPlugin implements FieldAnnBasePlugin {
             try {
                 BaseFragment baseFragment = fragmentCls.newInstance();
                 if (obj instanceof Activity) {
-                    baseFragment.setArguments(baseFragment.getInitBundle((Activity) obj,position));
+                    baseFragment.setArguments(baseFragment.getInitBundle((Activity) obj, position));
                 } else if (obj instanceof Fragment) {
-                    baseFragment.setArguments(baseFragment.getInitBundle((Fragment) obj,position));
+                    baseFragment.setArguments(baseFragment.getInitBundle((Fragment) obj, position));
                 }
                 fragments.add(baseFragment);
             } catch (Exception e) {

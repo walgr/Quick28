@@ -1,6 +1,7 @@
 package com.wpf.app.quick.base.helper.annotations;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -67,8 +68,7 @@ public class QuickBindHelper {
         dealAllField(viewHolder, null);
     }
 
-    //一直只能获取数据
-    public static void bind(Object object) {
+    public static void bind(Dialog object) {
         dealAllField(object, null);
     }
 

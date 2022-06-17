@@ -42,6 +42,7 @@ public class BindFragmentAnnPlugin implements FieldAnnBasePlugin {
                     } else if (obj instanceof Fragment) {
                         fragmentManager = ((Fragment) obj).getChildFragmentManager();
                     }
+                    if (fragmentManager == null) return;
                     if (bindFragmentAnn.withState()) {
                         viewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
                             private final HashMap<Integer, BaseFragment> mBaseFragmentList = new HashMap<>();
