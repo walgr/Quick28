@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
  */
 public interface FieldAnnBasePlugin {
 
-    default @NonNull Context getContext(@Nullable Object obj) {
+    default @Nullable Context getContext(@Nullable Object obj) {
         if (obj == null) return null;
         Context context = null;
         if (obj instanceof Activity) {

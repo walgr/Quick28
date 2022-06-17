@@ -1,12 +1,9 @@
 package com.wpf.app.quick.base.helper.annotations.plugins;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -14,6 +11,7 @@ import com.wpf.app.quick.base.helper.annotations.LoadSp;
 import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * Created by 王朋飞 on 2022/6/17.
@@ -37,7 +35,7 @@ public class LoadSpPlugin implements FieldAnnBasePlugin {
                 field.set(viewModel == null ? obj : viewModel, value);
             } else {
                 //不是要String要数据类
-                Object valueObj = new Gson().fromJson(value, field.getType());
+                Object valueObj = new Gson().fromJson(value, field.getGenericType());
                 field.set(viewModel == null ? obj : viewModel, valueObj);
             }
         } catch (Exception e) {
