@@ -147,6 +147,10 @@ public class QuickDialog extends Dialog implements DialogSize, DialogLifecycle {
         onDialogOpen();
     }
 
+    public void show(Object context) {
+        show();
+    }
+
     @Override
     public void dismiss() {
         super.dismiss();

@@ -16,10 +16,10 @@ import com.wpf.app.quick.base.widgets.dialog.QuickBottomSheetDialogFragment;
  */
 public class DialogSheetHelper {
 
-    public static BottomSheetBehavior<?> dealSheet(QuickBottomSheetDialog dialog) {
+    public static BottomSheetBehavior<View> dealSheet(QuickBottomSheetDialog dialog) {
         View bottomSheet = dialog.getWindow().findViewById(R.id.design_bottom_sheet);
         bottomSheet.setBackground(new ColorDrawable(Color.TRANSPARENT));
-        BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(bottomSheet);
+        BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(bottomSheet);
         if (dialog.initPeekHeight() != DialogSize.NO_SET) {
             behavior.setPeekHeight(dialog.initPeekHeight());
         }
@@ -30,10 +30,10 @@ public class DialogSheetHelper {
         return behavior;
     }
 
-    public static BottomSheetBehavior<?> dealSheet(QuickBottomSheetDialogFragment dialog) {
+    public static BottomSheetBehavior<View> dealSheet(QuickBottomSheetDialogFragment dialog) {
         View bottomSheet = dialog.getWindow().findViewById(R.id.design_bottom_sheet);
         bottomSheet.setBackground(new ColorDrawable(Color.TRANSPARENT));
-        BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(bottomSheet);
+        BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(bottomSheet);
         if (dialog.initPeekHeight() != DialogSize.NO_SET) {
             behavior.setPeekHeight(dialog.initPeekHeight());
         }

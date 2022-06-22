@@ -1,4 +1,4 @@
-package com.wpf.app.quick.base.widgets;
+package com.wpf.app.quick.base.widgets.bottomsheet;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -98,26 +99,14 @@ public class QuickBottomSheetView extends LinearLayout implements SheetInit, Qui
 
     protected BottomSheetBehavior<View> mBehavior;
     protected void initBottomSheet() {
-        mBehavior = new BottomSheetBehavior<>();
+        if (canScroll()) {
+            mBehavior = new BottomSheetBehavior<>();
+        } else {
+            mBehavior = new NoScrollBottomSheetBehavior<>();
+        }
         mBehavior.setHideable(hideAble());
         mBehavior.setState(initSheetState());
         mBehavior.setPeekHeight(initPeekHeight());
-
-        mBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View view, int i) {
-                if (!canScroll()) {
-                    if (i == BottomSheetBehavior.STATE_DRAGGING) {
-                        mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    }
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View view, float v) {
-
-            }
-        });
     }
 
     public BottomSheetBehavior<?> getBehavior() {

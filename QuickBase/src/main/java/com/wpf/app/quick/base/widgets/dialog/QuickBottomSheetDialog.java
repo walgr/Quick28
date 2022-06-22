@@ -33,7 +33,7 @@ public class QuickBottomSheetDialog extends BottomSheetDialog implements DialogS
 
     protected Context mContext;
 
-    protected BottomSheetBehavior<?> mBehavior;
+    protected BottomSheetBehavior<View> mBehavior;
 
     public QuickBottomSheetDialog(@NonNull Context context) {
         super(context);
@@ -76,7 +76,7 @@ public class QuickBottomSheetDialog extends BottomSheetDialog implements DialogS
         DialogSizeHelper.dealSize(this, initDialogWidth(), initDialogHeight());
     }
 
-    public BottomSheetBehavior<?> getBehavior() {
+    public BottomSheetBehavior<View> getBehavior() {
         return mBehavior;
     }
 
@@ -151,6 +151,10 @@ public class QuickBottomSheetDialog extends BottomSheetDialog implements DialogS
         onDialogPrepare();
         super.show();
         onDialogOpen();
+    }
+
+    public void show(Object context) {
+        show();
     }
 
     @Override
