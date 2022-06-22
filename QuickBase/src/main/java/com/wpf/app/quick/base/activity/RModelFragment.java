@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.view.ViewGroup;
-
+import android.view.View;
 import com.wpf.app.quick.base.R;
 import com.wpf.app.quick.base.viewmodel.BaseViewModel;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickRecyclerView;
@@ -44,11 +42,11 @@ public class RModelFragment<VM extends BaseViewModel<H>, H extends BaseView> ext
 
     @CallSuper
     @Override
-    public void initView() {
+    public void initView(View view) {
         if (getView() != null) {
             mRecyclerView = getView().findViewById(quickListId == 0 ? R.id.recyclerView : quickListId);
         }
-        super.initView();
+        super.initView(view);
     }
 
     public QuickRecyclerView getRecyclerView() {

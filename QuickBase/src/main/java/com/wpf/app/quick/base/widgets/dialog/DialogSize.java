@@ -9,7 +9,7 @@ import android.view.WindowManager;
 /**
  * Created by 王朋飞 on 2022/6/17.
  */
-public interface DialogSize {
+public interface DialogSize extends QuickContext {
 
     int NO_SET = 0;
 
@@ -41,17 +41,17 @@ public interface DialogSize {
         return NO_SET;
     }
 
-    //指定初始高度  不能低于最低 不能超过最高
+    //指定初始宽度  不能低于最低 不能超过最高
     default int initDialogWidth() {
         return WindowManager.LayoutParams.MATCH_PARENT;
     }
 
-    //最高高度
+    //最高宽度
     default int initDialogMaxWidth() {
         return WindowManager.LayoutParams.MATCH_PARENT;
     }
 
-    //最低高度
+    //最低宽度
     default int initDialogMinWidth() {
         return WindowManager.LayoutParams.WRAP_CONTENT;
     }
@@ -86,8 +86,12 @@ public interface DialogSize {
 
     public View getView();
     public Window getWindow();
-    public int getScreenWidth();
-    public int getScreenHeight();
+    default int getScreenWidth() {
+        return QuickContext.super.getScreenWidth();
+    }
+    default int getScreenHeight() {
+        return QuickContext.super.getScreenHeight();
+    }
     public int getNewWidth();
     public int getNewHeight();
 }

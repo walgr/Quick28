@@ -17,6 +17,7 @@ import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
 public class QuickViewHolder<T extends QuickItemData> extends RecyclerView.ViewHolder {
 
     boolean dealBindView = false;
+    boolean autoClick = false;
 
     protected QuickAdapter mQuickAdapter;
 
@@ -33,16 +34,35 @@ public class QuickViewHolder<T extends QuickItemData> extends RecyclerView.ViewH
         this.dealBindView = dealBindView;
     }
 
+    public QuickViewHolder(ViewGroup mParent, @LayoutRes int layoutId, boolean dealBindView, boolean autoClick) {
+        super(LayoutInflater.from(mParent.getContext()).inflate(layoutId, mParent, false));
+        this.dealBindView = dealBindView;
+        this.autoClick = autoClick;
+    }
+
     @CallSuper
     public void onCreateViewHolder(View itemView) {
         if (dealBindView) {
             QuickBindHelper.bind(this);
+        }
+        if (autoClick) {
+            itemView.setOnClickListener(v -> {
+                if (mQuickAdapter != null && mQuickAdapter.getQuickAdapterListener() != null) {
+                    ((QuickAdapterListener<T>)mQuickAdapter.getQuickAdapterListener()).onItemClick(
+                            v, getViewData(), getAdapterPosition()
+                    );
+                }
+            });
         }
     }
 
     @CallSuper
     public void onBindViewHolder(QuickAdapter adapter, @NonNull T data, int position) {
         this.mQuickAdapter = adapter;
+    }
+
+    public QuickAdapter getQuickAdapter() {
+        return mQuickAdapter;
     }
 
     public @Nullable
@@ -56,6 +76,14 @@ public class QuickViewHolder<T extends QuickItemData> extends RecyclerView.ViewH
         if (getAdapterClickListener() != null) {
             getAdapterClickListener().onItemClick(clickView, getViewData(), getAdapterPosition());
         }
+    }
+
+    public void setAutoClick(boolean autoClick) {
+        this.autoClick = autoClick;
+    }
+
+    public boolean isAutoClick() {
+        return autoClick;
     }
 
     public View getItemView() {

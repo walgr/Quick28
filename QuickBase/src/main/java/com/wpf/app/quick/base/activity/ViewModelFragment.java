@@ -41,9 +41,9 @@ public class ViewModelFragment<VM extends BaseViewModel<H>, H extends BaseView> 
 
     @CallSuper
     @Override
-    public void initView() {
+    public void initView(View view) {
         initViewModel();
-        super.initView();
+        super.initView(view);
     }
 
     public void initViewModel() {

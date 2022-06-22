@@ -1,10 +1,9 @@
 package com.wpf.app.quick.base.widgets.dialog;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -25,17 +24,11 @@ import com.wpf.app.quick.base.helper.DialogSizeHelper;
  * Created by 王朋飞 on 2022/6/16.
  */
 @SuppressLint("ValidFragment")
-public class QuickDialogFragment extends DialogFragment implements DialogSize {
+public class QuickDialogFragment extends DialogFragment implements DialogSize, DialogLifecycle {
 
     protected @LayoutRes
     int layoutId;
     protected View layoutView;
-
-    protected Context mContext;
-
-    public Context getRealContext() {
-        return mContext;
-    }
 
     public QuickDialogFragment(@LayoutRes int layoutId) {
         this.layoutId = layoutId;
@@ -54,7 +47,6 @@ public class QuickDialogFragment extends DialogFragment implements DialogSize {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        mContext = getActivity();
         Dialog dialog = new Dialog(this.getActivity(), initDialogStyle() == NO_SET ? this.getTheme() : initDialogStyle());
         Window window = dialog.getWindow();
         if (window != null) {
@@ -79,30 +71,20 @@ public class QuickDialogFragment extends DialogFragment implements DialogSize {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getScreenSize();
+        dealSize();
         initView(view);
         onDialogOpen();
     }
 
+    protected void dealSize() {
+        Point size = getScreenSize();
+        screenWidth = size.x;
+        screenHeight = size.y;
+    }
+
     protected int screenWidth, screenHeight;
 
-    private void getScreenSize() {
-        if (getRealContext() == null) return;
-        DisplayMetrics localDisplayMetrics = new DisplayMetrics();
-        ((Activity) getRealContext()).getWindowManager().getDefaultDisplay().getMetrics(localDisplayMetrics);
-        screenWidth = localDisplayMetrics.widthPixels;
-        screenHeight = localDisplayMetrics.heightPixels;
-    }
-
     public void initView(View view) {
-
-    }
-
-    public void onDialogOpen() {
-
-    }
-
-    public void onDialogClose() {
 
     }
 
@@ -125,6 +107,7 @@ public class QuickDialogFragment extends DialogFragment implements DialogSize {
     }
 
     public void show(Object context) {
+        onDialogPrepare();
         if (context instanceof AppCompatActivity) {
             show(((AppCompatActivity) context).getSupportFragmentManager(), getClass().getName() + System.currentTimeMillis());
         } else if (context instanceof Fragment) {

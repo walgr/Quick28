@@ -45,7 +45,16 @@ public class DialogSizeHelper {
 
 
     protected static int dealDialogHeight(DialogSize dialog, int curHeight) {
-        if (curHeight == WindowManager.LayoutParams.MATCH_PARENT) return curHeight;
+        if (curHeight == WindowManager.LayoutParams.MATCH_PARENT) {
+            curHeight = dialog.initDialogMaxHeight();
+            if (curHeight == WindowManager.LayoutParams.MATCH_PARENT) {
+                curHeight = dialog.initDialogHeight();
+            }
+            if (curHeight > 0) {
+                return dealDialogHeight(dialog, curHeight);
+            }
+            return curHeight;
+        }
         if (curHeight == WindowManager.LayoutParams.WRAP_CONTENT) return curHeight;
         if (dialog.initDialogMaxHeight() == WindowManager.LayoutParams.MATCH_PARENT
                 && dialog.initDialogMinHeight() == WindowManager.LayoutParams.WRAP_CONTENT)

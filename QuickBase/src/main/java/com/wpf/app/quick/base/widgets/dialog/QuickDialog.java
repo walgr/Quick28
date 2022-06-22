@@ -1,22 +1,18 @@
 package com.wpf.app.quick.base.widgets.dialog;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StyleRes;
 import android.util.DisplayMetrics;
-import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.wpf.app.quick.base.helper.DialogSizeHelper;
 
@@ -24,7 +20,7 @@ import com.wpf.app.quick.base.helper.DialogSizeHelper;
  * Created by 王朋飞 on 2022/6/16.
  */
 @SuppressLint("ValidFragment")
-public class QuickDialog extends Dialog implements DialogSize {
+public class QuickDialog extends Dialog implements DialogSize, DialogLifecycle {
 
     protected @LayoutRes
     int layoutId;
@@ -37,22 +33,6 @@ public class QuickDialog extends Dialog implements DialogSize {
     }
 
     protected Context mContext;
-
-    @NonNull
-    public Context getRealContext() {
-        return mContext;
-    }
-
-    public @Nullable Activity getActivity() {
-        if (getRealContext() instanceof Activity) {
-            return (Activity) getRealContext();
-        } else if (getRealContext() instanceof ContextThemeWrapper) {
-            if (((ContextThemeWrapper)getRealContext()).getBaseContext() instanceof Activity) {
-                return (Activity) ((ContextThemeWrapper) getRealContext()).getBaseContext();
-            }
-        }
-        return null;
-    }
 
     public QuickDialog(@NonNull Context context) {
         super(context);
@@ -97,7 +77,7 @@ public class QuickDialog extends Dialog implements DialogSize {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getScreenSize();
+        dealSize();
         if (layoutView != null) {
             mView = layoutView;
         } else {
@@ -114,6 +94,12 @@ public class QuickDialog extends Dialog implements DialogSize {
         initView(mView);
     }
 
+    protected void dealSize() {
+        Point size = getScreenSize();
+        screenWidth = size.x;
+        screenHeight = size.y;
+    }
+
     protected int screenWidth, screenHeight;
 
     public int getScreenWidth() {
@@ -124,21 +110,7 @@ public class QuickDialog extends Dialog implements DialogSize {
         return screenHeight;
     }
 
-    private void getScreenSize() {
-        DisplayMetrics localDisplayMetrics = getRealContext().getResources().getDisplayMetrics();
-        screenWidth = localDisplayMetrics.widthPixels;
-        screenHeight = localDisplayMetrics.heightPixels;
-    }
-
     public void initView(View view) {
-
-    }
-
-    public void onDialogOpen() {
-
-    }
-
-    public void onDialogClose() {
 
     }
 
@@ -157,7 +129,7 @@ public class QuickDialog extends Dialog implements DialogSize {
      */
     public void newHeight(int newHeight) {
         this.newHeight = newHeight;
-        DialogSizeHelper.dealSize(this, newWidth == 0 ? initDialogWidth() : newWidth, newHeight);
+        DialogSizeHelper.dealSize(this, newWidth == NO_SET ? initDialogWidth() : newWidth, newHeight);
     }
 
     /**
@@ -165,11 +137,12 @@ public class QuickDialog extends Dialog implements DialogSize {
      */
     public void newWidth(int newWidth) {
         this.newWidth = newWidth;
-        DialogSizeHelper.dealSize(this, newWidth, newHeight == 0 ? initDialogHeight() : newHeight);
+        DialogSizeHelper.dealSize(this, newWidth, newHeight == NO_SET ? initDialogHeight() : newHeight);
     }
 
     @Override
     public void show() {
+        onDialogPrepare();
         super.show();
         onDialogOpen();
     }

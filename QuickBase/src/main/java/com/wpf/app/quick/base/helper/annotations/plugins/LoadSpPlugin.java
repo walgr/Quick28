@@ -11,7 +11,6 @@ import com.wpf.app.quick.base.helper.annotations.LoadSp;
 import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
 
 import java.lang.reflect.Field;
-import java.util.List;
 
 /**
  * Created by 王朋飞 on 2022/6/17.

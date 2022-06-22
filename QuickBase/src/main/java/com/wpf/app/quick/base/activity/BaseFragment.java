@@ -76,8 +76,7 @@ public class BaseFragment extends Fragment implements BaseView {
     }
 
     @CallSuper
-    @Override
-    public void initView() {
+    public void initView(View view) {
 
     }
 
@@ -97,7 +96,14 @@ public class BaseFragment extends Fragment implements BaseView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         QuickBindHelper.bind(this);
+        initView(view);
         initView();
+    }
+
+    @Override
+    @CallSuper
+    public void initView() {
+
     }
 
     public @Nullable
