@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.wpf.app.quick.base.helper.DialogSizeHelper;
+import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
 
 /**
  * Created by 王朋飞 on 2022/6/16.
@@ -74,6 +75,7 @@ public class QuickDialogFragment extends DialogFragment implements DialogSize, D
         dealSize();
         initView(view);
         onDialogOpen();
+        QuickBindHelper.bind(this);
     }
 
     protected void dealSize() {

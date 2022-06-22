@@ -57,6 +57,10 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
         return this.mDataList;
     }
 
+    public @Nullable <T extends QuickItemData> ArrayList<T> getRealData() {
+        return (ArrayList<T>) this.mDataList;
+    }
+
     @NonNull
     @Override
     public QuickViewHolder<QuickItemData> onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

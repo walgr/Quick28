@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.view.View;
-import android.widget.FrameLayout;
-
 import com.wpf.app.quick.base.R;
 import com.wpf.app.quick.base.widgets.dialog.DialogSize;
 import com.wpf.app.quick.base.widgets.dialog.QuickBottomSheetDialog;
@@ -17,7 +15,7 @@ import com.wpf.app.quick.base.widgets.dialog.QuickBottomSheetDialogFragment;
 public class DialogSheetHelper {
 
     public static BottomSheetBehavior<View> dealSheet(QuickBottomSheetDialog dialog) {
-        View bottomSheet = dialog.getWindow().findViewById(R.id.design_bottom_sheet);
+        View bottomSheet = dialog.getWindow().findViewById(android.support.design.R.id.design_bottom_sheet);
         bottomSheet.setBackground(new ColorDrawable(Color.TRANSPARENT));
         BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(bottomSheet);
         if (dialog.initPeekHeight() != DialogSize.NO_SET) {
@@ -31,7 +29,7 @@ public class DialogSheetHelper {
     }
 
     public static BottomSheetBehavior<View> dealSheet(QuickBottomSheetDialogFragment dialog) {
-        View bottomSheet = dialog.getWindow().findViewById(R.id.design_bottom_sheet);
+        View bottomSheet = dialog.getWindow().findViewById(android.support.design.R.id.design_bottom_sheet);
         bottomSheet.setBackground(new ColorDrawable(Color.TRANSPARENT));
         BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(bottomSheet);
         if (dialog.initPeekHeight() != DialogSize.NO_SET) {

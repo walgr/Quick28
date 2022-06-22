@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../.gradle/caches/transforms-3/3d90108ed7de575bd26a084ec138b10d/transformed/design-28.0.0/res/layout/design_bottom_sheet_dialog.xml" value="0.19427083333333334" />
         <entry key="QuickBase/src/main/res/layout/fragment_recyclerview.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/layout/activity_recyclerview_test.xml" value="0.19427083333333334" />

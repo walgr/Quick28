@@ -37,4 +37,14 @@ public class QuickViewPager extends ViewPager implements ViewPagerSize {
         if (fragmentsAdapter == null) return;
         fragmentsAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void setCurrentItem(int item) {
+        post(() -> super.setCurrentItem(item));
+    }
+
+    @Override
+    public void setCurrentItem(int item, boolean smoothScroll) {
+        post(() -> super.setCurrentItem(item, smoothScroll));
+    }
 }
