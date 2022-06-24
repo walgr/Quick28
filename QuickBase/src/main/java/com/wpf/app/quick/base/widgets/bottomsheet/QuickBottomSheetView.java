@@ -97,6 +97,7 @@ public class QuickBottomSheetView extends LinearLayout implements SheetInit, Qui
         return DialogSize.NO_SET;
     }
 
+    protected int curSheetState = initSheetState();
     protected BottomSheetBehavior<View> mBehavior;
     protected void initBottomSheet() {
         if (canScroll()) {
@@ -104,6 +105,11 @@ public class QuickBottomSheetView extends LinearLayout implements SheetInit, Qui
         } else {
             mBehavior = new NoScrollBottomSheetBehavior<>();
         }
+        setBottomSheet();
+    }
+
+    @CallSuper
+    protected void setBottomSheet() {
         mBehavior.setHideable(hideAble());
         mBehavior.setState(initSheetState());
         mBehavior.setPeekHeight(initPeekHeight());

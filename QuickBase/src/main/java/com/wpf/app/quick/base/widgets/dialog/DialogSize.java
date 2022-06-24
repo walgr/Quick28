@@ -74,24 +74,24 @@ public interface DialogSize extends QuickContext {
         return Gravity.CENTER;
     }
 
-    public @StyleRes
+    @StyleRes
     default int initDialogStyle() {
         return NO_SET;
     }
 
-    public @StyleRes
+    @StyleRes
     default int initDialogAnim() {
         return NO_SET;
     }
 
-    public View getView();
-    public Window getWindow();
+    View getView();
+    Window getWindow();
     default int getScreenWidth() {
         return QuickContext.super.getScreenWidth();
     }
     default int getScreenHeight() {
         return QuickContext.super.getScreenHeight();
     }
-    public int getNewWidth();
-    public int getNewHeight();
+    int getNewWidth();
+    int getNewHeight();
 }
