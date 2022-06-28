@@ -1,6 +1,7 @@
 package com.wpf.app.quick.base.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 
@@ -14,11 +15,11 @@ import java.util.Set;
  */
 public class ActivityUtils {
 
-    public static <T extends Activity> void startActivity(Activity activity, Class<T> activityCls) {
+    public static <T extends Activity> void startActivity(Context activity, Class<T> activityCls) {
         startActivity(activity, activityCls, null);
     }
 
-    public static <T extends Activity> void startActivity(Activity activity, Class<T> activityCls, Map<String, Object> data) {
+    public static <T extends Activity> void startActivity(Context activity, Class<T> activityCls, Map<String, Object> data) {
         Intent intent = new Intent(activity, activityCls);
         if (data != null) {
             Set<String> keys = data.keySet();

@@ -24,7 +24,7 @@ public class BaseFragment extends Fragment implements BaseView {
 
     protected @LayoutRes
     int layoutId;
-    private View layoutView;
+    protected View layoutView;
     @AutoGet(key = titleKey)
     String title = this.getClass().getName();
 
@@ -95,6 +95,10 @@ public class BaseFragment extends Fragment implements BaseView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewCreated(view);
+    }
+
+    public void viewCreated(View view) {
         QuickBindHelper.bind(this);
         initView(view);
         initView();
