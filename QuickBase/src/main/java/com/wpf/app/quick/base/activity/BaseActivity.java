@@ -29,9 +29,6 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     private View layoutView;
     String activityTitle = "";
 
-//    public BaseActivity() {
-//    }
-
     public BaseActivity(@LayoutRes int layoutId) {
         this.layoutId = layoutId;
     }

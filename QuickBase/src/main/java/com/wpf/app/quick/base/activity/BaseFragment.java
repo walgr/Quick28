@@ -58,26 +58,21 @@ public class BaseFragment extends Fragment implements BaseView {
      * 从ViewModelActivity获取数据
      */
     public @NonNull Bundle getInitBundle(ViewModelActivity viewModelActivity, int position) {
-        return null;
+        return new Bundle();
     }
 
     /**
      * 从Activity获取数据
      */
     public @NonNull Bundle getInitBundle(Activity activity, int position) {
-        return null;
+        return new Bundle();
     }
 
     /**
      * 从Fragment获取数据
      */
     public @NonNull Bundle getInitBundle(Fragment fragment, int position) {
-        return null;
-    }
-
-    @CallSuper
-    public void initView(View view) {
-
+        return new Bundle();
     }
 
     @Nullable
@@ -102,6 +97,11 @@ public class BaseFragment extends Fragment implements BaseView {
         QuickBindHelper.bind(this);
         initView(view);
         initView();
+    }
+
+    @CallSuper
+    public void initView(View view) {
+
     }
 
     @Override
