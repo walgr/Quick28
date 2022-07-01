@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 19
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compileOnly deps.android.runtime
+    api deps.android.annotations
+    api deps.android.fragment
+}
+
+apply from: rootProject.file('gradle-mvn-push.gradle')

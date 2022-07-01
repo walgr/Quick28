@@ -12,9 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wpf.app.quick.base.helper.annotations.AutoGet;
+import com.wpf.app.quick.annotations.AutoGet;
 import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
-import com.wpf.app.quick.base.widgets.viewpager.ViewPagerSize;
 
 /**
  * Created by 王朋飞 on 2022/6/15.

@@ -1,18 +1,16 @@
 package com.wpf.app.quick.base.helper.annotations.plugins;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.wpf.app.quick.annotations.BindFragments;
 import com.wpf.app.quick.base.activity.BaseFragment;
-import com.wpf.app.quick.base.helper.annotations.BindFragments;
 import com.wpf.app.quick.base.widgets.viewpager.FragmentsAdapter;
 import com.wpf.app.quick.base.widgets.viewpager.FragmentsStateAdapter;
 
@@ -56,19 +54,21 @@ public class BindFragmentsAnnPlugin implements FieldAnnBasePlugin {
         }
     }
 
-    private List<? extends BaseFragment> getFragment(Object obj, Class<? extends BaseFragment>[] fragmentClsArray) {
+    private List<? extends BaseFragment> getFragment(Object obj, Class<? extends Fragment>[] fragmentClsArray) {
         if (fragmentClsArray == null) return null;
         List<BaseFragment> fragments = new ArrayList<>();
         int position = 0;
-        for (Class<? extends BaseFragment> fragmentCls : fragmentClsArray) {
+        for (Class<? extends Fragment> fragmentCls : fragmentClsArray) {
             try {
-                BaseFragment baseFragment = fragmentCls.newInstance();
-                if (obj instanceof Activity) {
-                    baseFragment.setArguments(baseFragment.getInitBundle((Activity) obj, position));
-                } else if (obj instanceof Fragment) {
-                    baseFragment.setArguments(baseFragment.getInitBundle((Fragment) obj, position));
+                Fragment baseFragment = fragmentCls.newInstance();
+                if (baseFragment instanceof BaseFragment) {
+                    if (obj instanceof Activity) {
+                        baseFragment.setArguments(((BaseFragment) baseFragment).getInitBundle((Activity) obj, position));
+                    } else if (obj instanceof Fragment) {
+                        baseFragment.setArguments(((BaseFragment) baseFragment).getInitBundle((Fragment) obj, position));
+                    }
+                    fragments.add((BaseFragment) baseFragment);
                 }
-                fragments.add(baseFragment);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -12,8 +12,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
 
-import com.wpf.app.quick.base.helper.annotations.FindView;
-import com.wpf.app.quick.base.helper.annotations.GroupView;
+import com.wpf.app.quick.annotations.GroupView;
+import com.wpf.app.quick.base.helper.annotations.BindSp2View;
 import com.wpf.app.quick.base.helper.annotations.GroupViews;
 import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
 
@@ -31,7 +31,7 @@ public class FindViewAnnPlugin implements FieldAnnBasePlugin {
 
     private void setFieldView(Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         try {
-            FindView findViewA = field.getAnnotation(FindView.class);
+            BindSp2View findViewA = field.getAnnotation(BindSp2View.class);
             if (findViewA != null) {
                 field.setAccessible(true);
                 View findView = findView(obj, findViewA.id());

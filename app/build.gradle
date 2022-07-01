@@ -36,6 +36,5 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 
     implementation project(path: ':QuickBase')
-//    implementation 'com.github.walgr:Quick28:0.1.0'
 
 }

@@ -7,7 +7,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
-import com.wpf.app.quick.base.helper.annotations.AutoGet;
+import com.wpf.app.quick.annotations.AutoGet;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;

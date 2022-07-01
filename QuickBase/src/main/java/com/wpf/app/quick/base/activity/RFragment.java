@@ -2,10 +2,6 @@ package com.wpf.app.quick.base.activity;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.ViewGroup;
-
 import com.wpf.app.quick.base.R;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickRecyclerView;
 

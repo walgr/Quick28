@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.wpf.app.quick.base.activity.TestActivity;
 import com.wpf.app.quick.base.activity.ViewModelBindingActivity;
-import com.wpf.app.quick.base.helper.annotations.FindView;
 import com.wpf.app.quick28.databinding.ActivityMainBinding;
 import com.wpf.app.quick28.model.MyMessage;
 import com.wpf.app.quick28.model.TestModel;
@@ -25,15 +24,12 @@ public class MainActivity extends ViewModelBindingActivity<MainViewModel, Activi
     }
 
     @SuppressLint("NonConstantResourceId")
-    @FindView(id = R.id.spTextView1, bindSp = "绑定的SpKey1", defaultValue = "默认值1")
     TextView text1;
 
     @SuppressLint("NonConstantResourceId")
-    @FindView(id = R.id.spTextView2, bindSp = "绑定的SpKey2", defaultValue = "默认值2")
     TextView text2;
 
     @SuppressLint("NonConstantResourceId")
-    @FindView(id = R.id.spTextView3, bindSp = "绑定的SpKey3", defaultValue = "默认值3")
     TextView text3;
 
     @SuppressLint("SetTextI18n")

@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.wpf.app.quick.base.helper.annotations.LoadSp;
+import com.wpf.app.quick.annotations.LoadSp;
 import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
 
 import java.lang.reflect.Field;

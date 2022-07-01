@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wpf.app.quick.base.helper.annotations.FindView;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickAdapter;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickViewHolder;
 import com.wpf.app.quick28.R;
@@ -16,7 +15,6 @@ import com.wpf.app.quick28.model.TestModel;
 public class TestHolder extends QuickViewHolder<TestModel> {
 
     @SuppressLint("NonConstantResourceId")
-    @FindView(id = R.id.txt)
     TextView txt= null;
 
     public TestHolder(ViewGroup mParent) {

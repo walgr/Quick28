@@ -11,9 +11,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.wpf.app.quick.annotations.BindFragment;
 import com.wpf.app.quick.base.activity.BaseFragment;
 import com.wpf.app.quick.base.activity.ViewModelActivity;
-import com.wpf.app.quick.base.helper.annotations.BindFragment;
 import com.wpf.app.quick.base.widgets.viewpager.ViewPagerSize;
 
 import java.lang.reflect.Field;
@@ -56,7 +56,7 @@ public class BindFragmentAnnPlugin implements FieldAnnBasePlugin {
                             @Override
                             public Fragment getItem(int i) {
                                 try {
-                                    BaseFragment baseFragment = bindFragmentAnn.fragment().newInstance();
+                                    BaseFragment baseFragment = (BaseFragment) bindFragmentAnn.fragment().newInstance();
                                     if (viewModel != null) {
                                         baseFragment.setArguments(baseFragment.getInitBundle(
                                                 (ViewModelActivity) obj, i));
@@ -111,7 +111,7 @@ public class BindFragmentAnnPlugin implements FieldAnnBasePlugin {
                             @Override
                             public Fragment getItem(int i) {
                                 try {
-                                    BaseFragment baseFragment = bindFragmentAnn.fragment().newInstance();
+                                    BaseFragment baseFragment = (BaseFragment) bindFragmentAnn.fragment().newInstance();
                                     if (viewModel != null) {
                                         baseFragment.setArguments(baseFragment.getInitBundle(
                                                 (ViewModelActivity) obj, i));

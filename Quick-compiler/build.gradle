@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 19
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'])
+    implementation project(':Quick-annotations')
+    implementation deps.auto.common
+    implementation deps.guava
+    api deps.javapoet
+    compileOnly deps.auto.service
+    compileOnly files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
+
+    api deps.incap.runtime
+    compileOnly deps.incap.processor
+}
+
+//checkstyle {
+//    configFile rootProject.file('checkstyle.xml')
+//    showViolations true
+//    //Remove this when tests are less verbose, i.e. using JavaPoet
+//    sourceSets = [sourceSets.main]
+//}
+
+apply from: rootProject.file('gradle-mvn-push.gradle')
