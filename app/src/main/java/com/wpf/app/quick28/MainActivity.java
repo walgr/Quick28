@@ -4,11 +4,10 @@ import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.TextView;
 
-import com.wpf.app.quick.annotations.BindSp2View;
 import com.wpf.app.quick.annotations.BindView;
 import com.wpf.app.quick.base.activity.TestActivity;
 import com.wpf.app.quick.base.activity.ViewModelBindingActivity;
-import com.wpf.app.quick.base.helper.bind.annotations.LoadSp;
+import com.wpf.app.quickbind.annotations.LoadSp;
 import com.wpf.app.quick28.databinding.ActivityMainBinding;
 import com.wpf.app.quick28.model.MyMessage;
 import com.wpf.app.quick28.model.TestModel;

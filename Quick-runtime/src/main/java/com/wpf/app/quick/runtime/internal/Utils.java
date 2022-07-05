@@ -130,7 +130,7 @@ public final class Utils {
     }
   }
 
-  private static String getResourceEntryName(View view, @IdRes int id) {
+  public static String getResourceEntryName(View view, @IdRes int id) {
     if (view.isInEditMode()) {
       return "<unavailable while editing>";
     }
