@@ -61,8 +61,8 @@ public class QuickBind {
     }
 
     public static void bind(Activity activity, ViewModel viewModel) {
-        dealAllField(activity, viewModel);
         bindBinder(activity, activity.getWindow().getDecorView());
+        dealAllField(activity, viewModel);
     }
 
     public static void bind(Fragment fragment) {
@@ -70,16 +70,18 @@ public class QuickBind {
     }
 
     public static void bind(Fragment fragment, ViewModel viewModel) {
-        dealAllField(fragment, viewModel);
         bindBinder(fragment, fragment.getView());
+        dealAllField(fragment, viewModel);
     }
 
     public static void bind(RecyclerView.ViewHolder viewHolder) {
+        bindBinder(viewHolder, viewHolder.itemView);
         dealAllField(viewHolder, null);
     }
 
-    public static void bind(Dialog object) {
-        dealAllField(object, null);
+    public static void bind(Dialog dialog) {
+        bindBinder(dialog, dialog.getWindow().getDecorView());
+        dealAllField(dialog, null);
     }
 
     private static void bindBinder(@NonNull Object target, @NonNull View source) {

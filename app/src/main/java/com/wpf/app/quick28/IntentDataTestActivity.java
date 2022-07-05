@@ -3,6 +3,7 @@ package com.wpf.app.quick28;
 import android.annotation.SuppressLint;
 import android.widget.TextView;
 
+import com.wpf.app.quick.annotations.BindView;
 import com.wpf.app.quick.annotations.GroupView;
 import com.wpf.app.quick.base.activity.ViewModelBindingActivity;
 import com.wpf.app.quickbind.GroupViews;
@@ -15,6 +16,7 @@ import com.wpf.app.quick28.viewmodel.IntentDataTestViewModel;
 public class IntentDataTestActivity extends ViewModelBindingActivity<IntentDataTestViewModel, ActivityDataTestBinding> {
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title)
     TextView title = null;
 
     @GroupView(idList = {R.id.title, R.id.title1})

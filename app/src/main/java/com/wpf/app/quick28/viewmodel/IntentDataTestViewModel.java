@@ -6,7 +6,9 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.wpf.app.quick.annotations.AutoGet;
+import com.wpf.app.quick.annotations.BindView;
 import com.wpf.app.quick.base.viewmodel.BindingViewModel;
+import com.wpf.app.quick28.R;
 import com.wpf.app.quick28.databinding.ActivityDataTestBinding;
 import com.wpf.app.quick28.model.MyMessage;
 import com.wpf.app.quick28.model.TestModel;
@@ -50,6 +52,7 @@ public class IntentDataTestViewModel extends BindingViewModel<ActivityDataTestBi
     TestModel[] arrayP = null;
 
     @SuppressLint({"NonConstantResourceId", "StaticFieldLeak"})
+    @BindView(R.id.title1)
     TextView title;
 
     @Override
