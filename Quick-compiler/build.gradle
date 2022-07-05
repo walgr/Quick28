@@ -1,20 +1,10 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'java-library'
+}
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-
-android {
-    compileSdkVersion 29
-
-    defaultConfig {
-        minSdkVersion 19
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+java {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
 }
 
 dependencies {
@@ -24,10 +14,14 @@ dependencies {
     implementation deps.guava
     api deps.javapoet
     compileOnly deps.auto.service
+    //解决和Gradle版本兼容问题（无法生成META-INF里services文件）
+    annotationProcessor deps.auto.service
     compileOnly files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
 
     api deps.incap.runtime
-    compileOnly deps.incap.processor
+//    compileOnly deps.incap.processor
+    //解决和Gradle版本兼容问题（无法生成META-INF里gradle文件）
+    annotationProcessor deps.incap.processor
 }
 
 //checkstyle {
@@ -37,4 +31,4 @@ dependencies {
 //    sourceSets = [sourceSets.main]
 //}
 
-apply from: rootProject.file('gradle-mvn-push.gradle')
+apply from: rootProject.file('gradle-mvn-push-jar.gradle')

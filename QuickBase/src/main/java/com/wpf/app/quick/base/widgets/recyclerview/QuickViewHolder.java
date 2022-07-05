@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
+import com.wpf.app.quick.base.helper.bind.QuickBind;
 
 /**
  * Created by 王朋飞 on 2022/5/20.
@@ -43,7 +43,7 @@ public class QuickViewHolder<T extends QuickItemData> extends RecyclerView.ViewH
     @CallSuper
     public void onCreateViewHolder(View itemView) {
         if (dealBindView) {
-            QuickBindHelper.bind(this);
+            QuickBind.bind(this);
         }
         if (autoClick) {
             itemView.setOnClickListener(v -> {

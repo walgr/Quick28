@@ -2,16 +2,13 @@ package com.wpf.app.quick.base.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
+import com.wpf.app.quick.base.helper.bind.QuickBind;
 import com.wpf.app.quick.base.utils.ViewMolderEx;
 import com.wpf.app.quick.base.viewmodel.BaseViewModel;
 
@@ -52,7 +49,7 @@ public class ViewModelFragment<VM extends BaseViewModel<H>, H extends BaseView> 
             mViewModel = new ViewModelProvider(this,
                     new ViewModelProvider.AndroidViewModelFactory((Application) getContext().getApplicationContext()))
                     .get(vmClass);
-            QuickBindHelper.bind(this, mViewModel);
+            QuickBind.bind(this, mViewModel);
             mViewModel.baseView = (H) this;
             mViewModel.onViewCreated((H) this);
         }

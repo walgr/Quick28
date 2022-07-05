@@ -1,4 +1,4 @@
-package com.wpf.app.quick.base.helper.annotations;
+package com.wpf.app.quick.annotations;
 
 import android.support.annotation.IdRes;
 

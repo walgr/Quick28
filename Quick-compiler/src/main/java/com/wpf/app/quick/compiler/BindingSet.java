@@ -28,10 +28,10 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
 import static com.google.auto.common.MoreElements.getPackage;
-import static com.wpf.app.quick.compiler.ButterKnifeProcessor.ACTIVITY_TYPE;
-import static com.wpf.app.quick.compiler.ButterKnifeProcessor.DIALOG_TYPE;
-import static com.wpf.app.quick.compiler.ButterKnifeProcessor.VIEW_TYPE;
-import static com.wpf.app.quick.compiler.ButterKnifeProcessor.isSubtypeOfType;
+import static com.wpf.app.quick.compiler.QuickProcessor.ACTIVITY_TYPE;
+import static com.wpf.app.quick.compiler.QuickProcessor.DIALOG_TYPE;
+import static com.wpf.app.quick.compiler.QuickProcessor.VIEW_TYPE;
+import static com.wpf.app.quick.compiler.QuickProcessor.isSubtypeOfType;
 import static java.util.Collections.singletonList;
 import static java.util.Objects.requireNonNull;
 import static javax.lang.model.element.Modifier.FINAL;
@@ -40,17 +40,17 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 
 /** A set of all the bindings requested by a single type. */
 final class BindingSet implements BindingInformationProvider {
-  static final ClassName UTILS = ClassName.get("butterknife.internal", "Utils");
+  static final ClassName UTILS = ClassName.get("com.wpf.app.quick.runtime.internal", "Utils");
   private static final ClassName VIEW = ClassName.get("android.view", "View");
   private static final ClassName CONTEXT = ClassName.get("android.content", "Context");
   private static final ClassName RESOURCES = ClassName.get("android.content.res", "Resources");
   private static final ClassName UI_THREAD =
-      ClassName.get("android.annotation", "UiThread");
+      ClassName.get("android.support.annotation", "UiThread");
   private static final ClassName CALL_SUPER =
-      ClassName.get("android.annotation", "CallSuper");
+      ClassName.get("android.support.annotation", "CallSuper");
   private static final ClassName SUPPRESS_LINT =
       ClassName.get("android.annotation", "SuppressLint");
-  private static final ClassName UNBINDER = ClassName.get("butterknife", "Unbinder");
+  private static final ClassName UNBINDER = ClassName.get("com.wpf.app.quick.runtime", "Unbinder");
   static final ClassName BITMAP_FACTORY = ClassName.get("android.graphics", "BitmapFactory");
   static final ClassName CONTEXT_COMPAT =
       ClassName.get("android.core.content", "ContextCompat");
@@ -142,7 +142,7 @@ final class BindingSet implements BindingInformationProvider {
   private MethodSpec createBindingViewDelegateConstructor() {
     return MethodSpec.constructorBuilder()
         .addJavadoc("@deprecated Use {@link #$T($T, $T)} for direct creation.\n    "
-                + "Only present for runtime invocation through {@code ButterKnife.bind()}.\n",
+                + "Only present for runtime invocation through {@code QuickBind.bind()}.\n",
             bindingClassName, targetTypeName, CONTEXT)
         .addAnnotation(Deprecated.class)
         .addAnnotation(UI_THREAD)

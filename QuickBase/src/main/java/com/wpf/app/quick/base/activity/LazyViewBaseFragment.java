@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
+import com.wpf.app.quick.base.helper.bind.QuickBind;
 
 /**
  * Created by 王朋飞 on 2022/6/28.
@@ -42,7 +42,7 @@ public class LazyViewBaseFragment extends BaseFragment {
             } else if (layoutId != 0) {
                 rootView = inflater.inflate(layoutId, null);
             }
-            QuickBindHelper.bind(this);
+            QuickBind.bind(this);
             initView(rootView);
             initView();
         }

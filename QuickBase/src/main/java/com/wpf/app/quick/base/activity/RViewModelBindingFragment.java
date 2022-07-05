@@ -3,9 +3,6 @@ package com.wpf.app.quick.base.activity;
 import android.annotation.SuppressLint;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.view.ViewGroup;
-
 import com.wpf.app.quick.base.R;
 import com.wpf.app.quick.base.viewmodel.BindingViewModel;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickRecyclerView;

@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.TextView;
 
+import com.wpf.app.quick.annotations.BindSp2View;
+import com.wpf.app.quick.annotations.BindView;
 import com.wpf.app.quick.base.activity.TestActivity;
 import com.wpf.app.quick.base.activity.ViewModelBindingActivity;
+import com.wpf.app.quick.base.helper.bind.annotations.LoadSp;
 import com.wpf.app.quick28.databinding.ActivityMainBinding;
 import com.wpf.app.quick28.model.MyMessage;
 import com.wpf.app.quick28.model.TestModel;
@@ -24,12 +27,18 @@ public class MainActivity extends ViewModelBindingActivity<MainViewModel, Activi
     }
 
     @SuppressLint("NonConstantResourceId")
+    @LoadSp(key = "绑定的SpKey1", defaultValue = "默认值1")
+    @BindView(R.id.spTextView1)
     TextView text1;
 
     @SuppressLint("NonConstantResourceId")
+    @LoadSp(key = "绑定的SpKey2", defaultValue = "默认值2")
+    @BindView(R.id.spTextView2)
     TextView text2;
 
     @SuppressLint("NonConstantResourceId")
+    @LoadSp(key = "绑定的SpKey3", defaultValue = "默认值3")
+    @BindView(R.id.spTextView3)
     TextView text3;
 
     @SuppressLint("SetTextI18n")

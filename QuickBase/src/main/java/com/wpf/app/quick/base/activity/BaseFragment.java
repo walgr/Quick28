@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wpf.app.quick.annotations.AutoGet;
-import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
+import com.wpf.app.quick.base.helper.bind.QuickBind;
 
 /**
  * Created by 王朋飞 on 2022/6/15.
@@ -98,7 +98,7 @@ public class BaseFragment extends Fragment implements BaseView {
     }
 
     public void viewCreated(View view) {
-        QuickBindHelper.bind(this);
+        QuickBind.bind(this);
         initView(view);
         initView();
     }

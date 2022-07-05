@@ -64,7 +64,7 @@ final class ViewBinding {
   }
 
   public boolean isBoundToRoot() {
-    return ButterKnifeProcessor.NO_ID.equals(id);
+    return QuickProcessor.NO_ID.equals(id);
   }
 
   public static final class Builder {

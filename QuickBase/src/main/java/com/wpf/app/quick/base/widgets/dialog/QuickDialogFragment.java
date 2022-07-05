@@ -12,14 +12,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
 import com.wpf.app.quick.base.helper.DialogSizeHelper;
-import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
+import com.wpf.app.quick.base.helper.bind.QuickBind;
 
 /**
  * Created by 王朋飞 on 2022/6/16.
@@ -75,7 +74,7 @@ public class QuickDialogFragment extends DialogFragment implements DialogSize, D
         dealSize();
         initView(view);
         onDialogOpen();
-        QuickBindHelper.bind(this);
+        QuickBind.bind(this);
     }
 
     protected void dealSize() {

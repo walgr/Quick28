@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.wpf.app.quick.base.constant.BRConstant;
-import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
+import com.wpf.app.quick.base.helper.bind.QuickBind;
 import com.wpf.app.quick.base.utils.ViewMolderEx;
 import com.wpf.app.quick.base.viewmodel.BindingViewModel;
 
@@ -77,7 +77,7 @@ public class ViewModelBindingFragment<VM extends BindingViewModel<VB>, VB extend
         Class<VM> viewModelCls = ViewMolderEx.getVm0Clazz(this);
         if (viewModelCls != null && getContext() != null) {
             setViewModel(new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) getContext().getApplicationContext())).get(viewModelCls));
-            QuickBindHelper.bind(this, mViewModel);
+            QuickBind.bind(this, mViewModel);
             if (mViewModel != null) {
                 mViewModel.onBindingCreate(viewBinding);
             }

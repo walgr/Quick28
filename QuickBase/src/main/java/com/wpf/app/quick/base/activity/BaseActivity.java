@@ -1,22 +1,15 @@
 package com.wpf.app.quick.base.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
+import com.wpf.app.quick.base.helper.bind.QuickBind;
 import com.wpf.app.quick.base.utils.ActivityUtils;
-import com.wpf.app.quick.base.widgets.viewpager.ViewPagerSize;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by 王朋飞 on 2022/5/20.
@@ -28,9 +21,6 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     int layoutId;
     private View layoutView;
     String activityTitle = "";
-
-//    public BaseActivity() {
-//    }
 
     public BaseActivity(@LayoutRes int layoutId) {
         this.layoutId = layoutId;
@@ -54,7 +44,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dealContentView();
-        QuickBindHelper.bind(this);
+        QuickBind.bind(this);
         initView();
         setTitle();
     }

@@ -5,7 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 
 import com.wpf.app.quick.base.constant.BRConstant;
-import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
+import com.wpf.app.quick.base.helper.bind.QuickBind;
 import com.wpf.app.quick.base.utils.ViewMolderEx;
 import com.wpf.app.quick.base.viewmodel.BindingViewModel;
 
@@ -50,7 +50,7 @@ public class ViewModelBindingActivity<VM extends BindingViewModel<VB>, VB extend
         Class<VM> viewModelCls = ViewMolderEx.getVm0Clazz(this);
         if (viewModelCls != null) {
             setViewModel(new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(viewModelCls));
-            QuickBindHelper.bind(this, mViewModel);
+            QuickBind.bind(this, mViewModel);
             if (mViewModel != null) {
                 mViewModel.onBindingCreate(viewBinding);
             }

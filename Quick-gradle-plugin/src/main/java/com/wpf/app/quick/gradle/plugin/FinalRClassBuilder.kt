@@ -11,7 +11,7 @@ import javax.lang.model.element.Modifier.PUBLIC
 import javax.lang.model.element.Modifier.STATIC
 
 
-private const val ANNOTATION_PACKAGE = "android.annotation"
+private const val ANNOTATION_PACKAGE = "android.support.annotation"
 internal val SUPPORTED_TYPES = setOf("anim", "array", "attr", "bool", "color", "dimen",
     "drawable", "id", "integer", "layout", "menu", "plurals", "string", "style", "styleable")
 
@@ -35,7 +35,7 @@ class FinalRClassBuilder(
       }
     }
     return JavaFile.builder(packageName, result.build())
-        .addFileComment("Generated code from Butter Knife gradle plugin. Do not modify!")
+        .addFileComment("Generated code from Quick gradle plugin. Do not modify!")
         .build()
   }
 

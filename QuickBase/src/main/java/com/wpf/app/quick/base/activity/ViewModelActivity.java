@@ -4,7 +4,7 @@ package com.wpf.app.quick.base.activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.view.View;
 
-import com.wpf.app.quick.base.helper.annotations.QuickBindHelper;
+import com.wpf.app.quick.base.helper.bind.QuickBind;
 import com.wpf.app.quick.base.utils.ViewMolderEx;
 import com.wpf.app.quick.base.viewmodel.BaseViewModel;
 
@@ -70,7 +70,7 @@ public class ViewModelActivity<VM extends BaseViewModel<H>, H extends BaseView> 
             mViewModel = new ViewModelProvider(this,
                     new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                     .get(vmClass);
-            QuickBindHelper.bind(this, mViewModel);
+            QuickBind.bind(this, mViewModel);
             mViewModel.baseView = (H) this;
             mViewModel.onViewCreated((H) this);
         }
