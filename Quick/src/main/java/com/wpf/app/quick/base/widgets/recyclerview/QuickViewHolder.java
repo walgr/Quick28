@@ -48,7 +48,7 @@ public class QuickViewHolder<T extends QuickItemData> extends RecyclerView.ViewH
         if (autoClick) {
             itemView.setOnClickListener(v -> {
                 if (mQuickAdapter != null && mQuickAdapter.getQuickAdapterListener() != null) {
-                    ((QuickAdapterListener<T>)mQuickAdapter.getQuickAdapterListener()).onItemClick(
+                    ((QuickAdapterListener<T>) mQuickAdapter.getQuickAdapterListener()).onItemClick(
                             v, getViewData(), getAdapterPosition()
                     );
                 }
@@ -59,6 +59,9 @@ public class QuickViewHolder<T extends QuickItemData> extends RecyclerView.ViewH
     @CallSuper
     public void onBindViewHolder(QuickAdapter adapter, @NonNull T data, int position) {
         this.mQuickAdapter = adapter;
+        if (data instanceof QuickBindData) {
+            ((QuickBindData) data).onBindViewHolder(adapter, (QuickViewHolder<? extends QuickBindData>) this, position);
+        }
     }
 
     public QuickAdapter getQuickAdapter() {

@@ -4,15 +4,12 @@ import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
 
-import com.wpf.app.quick.annotations.BindSp2View;
-import com.wpf.app.quick.annotations.GroupView;
-import com.wpf.app.quickbind.GroupViews;
+import com.wpf.app.quickbind.annotations.BindSp2View;
 import com.wpf.app.quickbind.QuickBind;
 
 import java.lang.reflect.Field;
@@ -32,7 +29,7 @@ public class BindSp2ViewAnnPlugin implements FieldAnnBasePlugin {
             BindSp2View findViewA = field.getAnnotation(BindSp2View.class);
             if (findViewA != null) {
                 field.setAccessible(true);
-                View findView = findView(obj, findViewA.id());
+                View findView = (View) field.get(obj);
                 if (findView instanceof TextView) {
                     setTextViewValue(
                             (TextView) findView,
@@ -46,22 +43,6 @@ public class BindSp2ViewAnnPlugin implements FieldAnnBasePlugin {
                     field.set(viewModel, findView);
                 } else {
                     field.set(obj, findView);
-                }
-            }
-            GroupView groupViewA = field.getAnnotation(GroupView.class);
-            if (groupViewA != null) {
-                field.setAccessible(true);
-                GroupViews groupViews = new GroupViews();
-                for (int id : groupViewA.idList()) {
-                    View findView = findView(obj, id);
-                    if (findView != null) {
-                        groupViews.viewList.add(findView);
-                    }
-                }
-                if (viewModel != null) {
-                    field.set(viewModel, groupViews);
-                } else {
-                    field.set(obj, groupViews);
                 }
             }
         } catch (Exception e) {

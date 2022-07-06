@@ -15,11 +15,13 @@ import android.view.View;
 
 import com.wpf.app.quick.runtime.Unbinder;
 import com.wpf.app.quickbind.plugins.AutoGetAnnPlugin;
+import com.wpf.app.quickbind.plugins.BindData2ViewAnnPlugin;
 import com.wpf.app.quickbind.plugins.BindFragmentAnnPlugin;
 import com.wpf.app.quickbind.plugins.BindFragmentsAnnPlugin;
 import com.wpf.app.quickbind.plugins.BindViewAnnPlugin;
 import com.wpf.app.quickbind.plugins.FieldAnnBasePlugin;
 import com.wpf.app.quickbind.plugins.BindSp2ViewAnnPlugin;
+import com.wpf.app.quickbind.plugins.GroupViewAnnPlugin;
 import com.wpf.app.quickbind.plugins.LoadSpPlugin;
 
 import java.lang.reflect.Constructor;
@@ -49,37 +51,41 @@ public class QuickBind {
 
     static {
         registerPlugin(new BindViewAnnPlugin());
-        registerPlugin(new BindSp2ViewAnnPlugin());
+        registerPlugin(new GroupViewAnnPlugin());
         registerPlugin(new AutoGetAnnPlugin());
+        registerPlugin(new BindSp2ViewAnnPlugin());
         registerPlugin(new LoadSpPlugin());
         registerPlugin(new BindFragmentsAnnPlugin());
         registerPlugin(new BindFragmentAnnPlugin());
+        registerPlugin(new BindData2ViewAnnPlugin());
     }
 
-    public static void bind(Activity activity) {
+    public static void bind(@NonNull Activity activity) {
         bind(activity, null);
     }
 
-    public static void bind(Activity activity, ViewModel viewModel) {
+    public static void bind(@NonNull Activity activity, ViewModel viewModel) {
         bindBinder(activity, activity.getWindow().getDecorView());
         dealAllField(activity, viewModel);
     }
 
-    public static void bind(Fragment fragment) {
+    public static void bind(@NonNull Fragment fragment) {
         bind(fragment, null);
     }
 
-    public static void bind(Fragment fragment, ViewModel viewModel) {
-        bindBinder(fragment, fragment.getView());
+    public static void bind(@NonNull Fragment fragment, ViewModel viewModel) {
+        if (fragment.getView() != null) {
+            bindBinder(fragment, fragment.getView());
+        }
         dealAllField(fragment, viewModel);
     }
 
-    public static void bind(RecyclerView.ViewHolder viewHolder) {
+    public static void bind(@NonNull RecyclerView.ViewHolder viewHolder) {
         bindBinder(viewHolder, viewHolder.itemView);
         dealAllField(viewHolder, null);
     }
 
-    public static void bind(Dialog dialog) {
+    public static void bind(@NonNull Dialog dialog) {
         bindBinder(dialog, dialog.getWindow().getDecorView());
         dealAllField(dialog, null);
     }
@@ -122,13 +128,15 @@ public class QuickBind {
         if (bindingCtor != null || BINDINGS.containsKey(cls)) {
             return bindingCtor;
         }
+        String clsPackage = cls.getPackage().getName();
         String clsName = cls.getName();
+        String clsSimpleName = cls.getSimpleName();
         if (clsName.startsWith("android.") || clsName.startsWith("java.")
                 || clsName.startsWith("androidx.")) {
             return null;
         }
         try {
-            Class<?> bindingClass = cls.getClassLoader().loadClass(clsName + "_ViewBinding");
+            Class<?> bindingClass = cls.getClassLoader().loadClass(clsPackage + ".Quick_" + clsSimpleName + "_ViewBinding");
             //noinspection unchecked
             bindingCtor = (Constructor<? extends Unbinder>) bindingClass.getConstructor(cls, View.class);
         } catch (ClassNotFoundException e) {
@@ -140,7 +148,7 @@ public class QuickBind {
         return bindingCtor;
     }
 
-    private static void dealAllField(Object obj, ViewModel viewModel) {
+    public static void dealAllField(Object obj, ViewModel viewModel) {
         if (obj == null) return;
         try {
             List<Field> fields = getAllField(obj);

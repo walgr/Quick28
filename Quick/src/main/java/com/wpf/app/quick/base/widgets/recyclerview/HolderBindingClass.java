@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface HolderBindingClass {
-    Class<? extends QuickViewBindingHolder<? extends QuickBindingData<? extends ViewDataBinding>, ? extends ViewDataBinding>> holderClass();
+    Class<? extends QuickViewBindingHolder<? extends QuickViewDataBinding<? extends ViewDataBinding>, ? extends ViewDataBinding>> holderClass();
 }

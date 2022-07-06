@@ -1,6 +1,4 @@
-package com.wpf.app.quick.annotations;
-
-import android.support.annotation.IdRes;
+package com.wpf.app.quickbind.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,7 +11,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BindSp2View {
-    @IdRes int id();
     String bindSp() default "";
     String setSp() default "";
     String getSp() default "";

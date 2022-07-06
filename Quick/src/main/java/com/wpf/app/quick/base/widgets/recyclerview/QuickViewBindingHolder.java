@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * Created by 王朋飞 on 2022/5/20.
  */
-public class QuickViewBindingHolder<T extends QuickBindingData<VB>, VB extends ViewDataBinding> extends QuickViewHolder<T> {
+public class QuickViewBindingHolder<T extends QuickViewDataBinding<VB>, VB extends ViewDataBinding> extends QuickViewHolder<T> {
 
     protected @LayoutRes
     int layoutId;
@@ -44,7 +44,7 @@ public class QuickViewBindingHolder<T extends QuickBindingData<VB>, VB extends V
     public void onCreateViewHolder(View itemView) {
         super.onCreateViewHolder(itemView);
         mViewBinding = DataBindingUtil.bind(itemView);
-        mViewData.onCreateHolderEnd(this);
+        mViewData.onHolderCreated(this);
         onCreateHolderEnd(itemView);
     }
 

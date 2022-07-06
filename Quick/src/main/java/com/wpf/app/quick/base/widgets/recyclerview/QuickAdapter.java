@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,11 +53,13 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
         this.mDataList.add(pos, data);
     }
 
-    public @Nullable ArrayList<QuickItemData> getData() {
+    public @Nullable
+    ArrayList<QuickItemData> getData() {
         return this.mDataList;
     }
 
-    public @Nullable <T extends QuickItemData> ArrayList<T> getRealData() {
+    public @Nullable
+    <T extends QuickItemData> ArrayList<T> getRealData() {
         return (ArrayList<T>) this.mDataList;
     }
 
@@ -65,52 +67,56 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
     @Override
     public QuickViewHolder<QuickItemData> onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         QuickItemData findData = findDataByViewType(i);
-        if (findData instanceof QuickBindingData) {
-            HolderBindingClass holderAnnotationClass = findData.getClass().getAnnotation(HolderBindingClass.class);
+        if (findData instanceof QuickViewDataBinding) {
             HolderBindingLayout holderAnnotationLayout = findData.getClass().getAnnotation(HolderBindingLayout.class);
             if (holderAnnotationLayout != null) {
                 QuickViewBindingHolder bindingHolder = new QuickViewBindingHolder(
                         viewGroup, holderAnnotationLayout.layout()
                 );
-                bindingHolder.setViewData((QuickBindingData)findData);
+                bindingHolder.setViewData((QuickViewDataBinding) findData);
                 bindingHolder.onCreateViewHolder(bindingHolder.itemView);
                 return bindingHolder;
             }
+            HolderBindingClass holderAnnotationClass = findData.getClass().getAnnotation(HolderBindingClass.class);
             if (holderAnnotationClass != null) {
                 try {
                     Constructor<?> bindingHolderCls = holderAnnotationClass.holderClass().getConstructor(ViewGroup.class);
                     QuickViewBindingHolder bindingHolder = (QuickViewBindingHolder) bindingHolderCls.newInstance(viewGroup);
-                    bindingHolder.setViewData((QuickBindingData)findData);
+                    bindingHolder.setViewData((QuickViewDataBinding) findData);
                     bindingHolder.onCreateViewHolder(bindingHolder.itemView);
                     return bindingHolder;
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-        HolderClass holderAnnotation = findData.getClass().getAnnotation(HolderClass.class);
-        if (holderAnnotation == null) {
-            throw new RuntimeException("当前数据类未使用HolderClass注解指定ViewHolder");
-        }
-        Class<?> holderCls = holderAnnotation.holderClass();
-        try {
-            Constructor<?> holderConstructor = holderCls.getConstructor(ViewGroup.class);
-            QuickViewHolder holder = (QuickViewHolder) holderConstructor.newInstance(viewGroup);
+        if (findData != null) {
+            HolderClass holderAnnotation = findData.getClass().getAnnotation(HolderClass.class);
+            QuickViewHolder<? extends QuickItemData> holder = null;
+
+            if (holderAnnotation == null) {
+                if (findData instanceof QuickBindData) {
+                    holder = new QuickViewHolder<>(viewGroup, ((QuickBindData) findData).layoutId);
+                } else {
+                    throw new RuntimeException("当前数据类未使用HolderClass注解指定ViewHolder");
+                }
+            } else {
+                try {
+                    Class<?> holderCls = holderAnnotation.holderClass();
+                    Constructor<?> holderConstructor = holderCls.getConstructor(ViewGroup.class);
+                    holder = (QuickViewHolder<? extends QuickItemData>) holderConstructor.newInstance(viewGroup);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             holder.onCreateViewHolder(holder.itemView);
-            return holder;
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            e.printStackTrace();
+            return (QuickViewHolder<QuickItemData>) holder;
         }
         return null;
     }
 
-    private @Nullable QuickItemData findDataByViewType(int viewType) {
+    private @Nullable
+    QuickItemData findDataByViewType(int viewType) {
         if (this.mDataList == null) return null;
         for (QuickItemData itemData : this.mDataList) {
             if (itemData.getViewType() == viewType) {

@@ -1,6 +1,7 @@
 package com.wpf.app.quick28.adapterholder;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
