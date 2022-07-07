@@ -1,6 +1,7 @@
-package com.wpf.app.quick.base.helper;
+package com.wpf.app.quick.base.helper.binddatahelper;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -9,11 +10,11 @@ import com.wpf.app.quickbind.BindBaseHelper;
 /**
  * Created by 王朋飞 on 2022/7/6.
  */
-public class GlideDataImage implements BindBaseHelper<ImageView, String> {
+public class Url2ImageView implements BindBaseHelper<ImageView, String> {
 
     @Override
-    public void initView(ImageView view, String url) {
-        if (view == null || view.getContext() == null) return;
+    public void initView(@NonNull ImageView view, @NonNull String url) {
+        if (view.getContext() == null) return;
         Activity activity = (Activity) view.getContext();
         if (activity.isDestroyed() || activity.isFinishing()) return;
         Glide.with(activity)

@@ -26,6 +26,7 @@ public class IntentDataTestActivity extends ViewModelBindingActivity<IntentDataT
         super(R.layout.activity_data_test, "传输测试页");
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void initView(ActivityDataTestBinding viewDataBinding) {
         super.initView(viewDataBinding);

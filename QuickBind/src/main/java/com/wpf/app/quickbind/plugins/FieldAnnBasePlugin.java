@@ -10,13 +10,32 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.wpf.app.quick.runtime.Databinder;
+import com.wpf.app.quick.runtime.internal.Utils;
+import com.wpf.app.quickbind.QuickBind;
+
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 /**
  * Created by 王朋飞 on 2022/6/15.
  * 处理有注解的属性
  */
 public interface FieldAnnBasePlugin {
+
+    default @NonNull Object getRealObj(@NonNull Object obj, @Nullable ViewModel viewModel) {
+        if (viewModel != null) return viewModel;
+        return obj;
+    }
+
+    default @Nullable ArrayList<Integer> getSaveIdList(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
+        Databinder databinder = QuickBind.BINDEDMAP.get(getRealObj(obj, viewModel).getClass());
+        Object value = databinder.getFieldValue(field.getName());
+        if (value instanceof ArrayList) {
+            return (ArrayList<Integer>) value;
+        }
+        return null;
+    }
 
     default @Nullable Context getContext(@Nullable Object obj) {
         if (obj == null) return null;
@@ -31,9 +50,7 @@ public interface FieldAnnBasePlugin {
         return context;
     }
 
-
-    default View findView(Object obj, int id) {
-        View findView = null;
+    default View getRootView(Object obj) {
         View rootView = null;
         if (obj instanceof Activity) {
             rootView = ((Activity) obj).getWindow().getDecorView();
@@ -47,6 +64,12 @@ public interface FieldAnnBasePlugin {
         if (obj instanceof RecyclerView.ViewHolder) {
             rootView = ((RecyclerView.ViewHolder) obj).itemView;
         }
+        return rootView;
+    }
+
+    default View findView(Object obj, int id) {
+        View findView = null;
+        View rootView = getRootView(obj);
         if (rootView != null) {
             findView = rootView.findViewById(id);
         }

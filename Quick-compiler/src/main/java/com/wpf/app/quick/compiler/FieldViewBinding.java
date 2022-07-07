@@ -8,15 +8,13 @@ final class FieldViewBinding implements MemberViewBinding {
   private final String name;
   private final TypeName type;
   private final boolean required;
-  private final boolean dealSaveId;
-  private final boolean onlyDealSaveId;
+  private final boolean groupView;
 
-  FieldViewBinding(String name, TypeName type, boolean required, boolean dealSaveId, boolean onlyDealSaveId) {
+  FieldViewBinding(String name, TypeName type, boolean required, boolean groupView) {
     this.name = name;
     this.type = type;
     this.required = required;
-    this.dealSaveId = dealSaveId;
-    this.onlyDealSaveId = onlyDealSaveId;
+    this.groupView = groupView;
   }
 
   public String getName() {
@@ -42,11 +40,7 @@ final class FieldViewBinding implements MemberViewBinding {
     return required;
   }
 
-  public boolean isDealSaveId() {
-    return dealSaveId;
-  }
-
-  public boolean isOnlyDealSaveId() {
-    return onlyDealSaveId;
+  public boolean isGroupView() {
+    return groupView;
   }
 }

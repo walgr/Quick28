@@ -30,7 +30,7 @@ public class BindFragmentAnnPlugin implements FieldAnnBasePlugin {
             BindFragment bindFragmentAnn = field.getAnnotation(BindFragment.class);
             if (bindFragmentAnn != null) {
                 field.setAccessible(true);
-                Object viewPagerObj = field.get(viewModel == null ? obj : viewModel);
+                Object viewPagerObj = field.get(getRealObj(obj, viewModel));
                 if (viewPagerObj instanceof ViewPager) {
                     ViewPager viewPager = (ViewPager) viewPagerObj;
                     if (bindFragmentAnn.limit() > 0) {

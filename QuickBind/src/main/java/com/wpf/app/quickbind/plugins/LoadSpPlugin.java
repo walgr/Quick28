@@ -31,11 +31,11 @@ public class LoadSpPlugin implements FieldAnnBasePlugin {
             String value = context.getSharedPreferences(fileName, Context.MODE_PRIVATE).getString(loadSpAnn.key(), loadSpAnn.defaultValue());
             field.setAccessible(true);
             if (field.getType() == String.class) {
-                field.set(viewModel == null ? obj : viewModel, value);
+                field.set(getRealObj(obj, viewModel), value);
             } else {
                 //不是要String要数据类
                 Object valueObj = new Gson().fromJson(value, field.getGenericType());
-                field.set(viewModel == null ? obj : viewModel, valueObj);
+                field.set(getRealObj(obj, viewModel), valueObj);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BindData2View {
     @IdRes int id();
-    Class<? extends BindBaseHelper> helper();
+    Class<? extends BindBaseHelper<?, ?>> helper();
 }

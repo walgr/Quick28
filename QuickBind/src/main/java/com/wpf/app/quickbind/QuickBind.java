@@ -9,11 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.wpf.app.quick.runtime.Unbinder;
+import com.wpf.app.quick.runtime.Databinder;
 import com.wpf.app.quickbind.plugins.AutoGetAnnPlugin;
 import com.wpf.app.quickbind.plugins.BindData2ViewAnnPlugin;
 import com.wpf.app.quickbind.plugins.BindFragmentAnnPlugin;
@@ -23,12 +22,12 @@ import com.wpf.app.quickbind.plugins.FieldAnnBasePlugin;
 import com.wpf.app.quickbind.plugins.BindSp2ViewAnnPlugin;
 import com.wpf.app.quickbind.plugins.GroupViewAnnPlugin;
 import com.wpf.app.quickbind.plugins.LoadSpPlugin;
+import com.wpf.app.quickbind.utils.ReflectHelper;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,9 +89,10 @@ public class QuickBind {
         dealAllField(dialog, null);
     }
 
+    public static final Map<Class<?>, Databinder> BINDEDMAP = new LinkedHashMap<>();
     private static void bindBinder(@NonNull Object target, @NonNull View source) {
         Class<?> targetClass = target.getClass();
-        Constructor<? extends Unbinder> constructor = findBindingConstructorForClass(targetClass);
+        Constructor<? extends Databinder> constructor = findBindingConstructorForClass(targetClass);
 
         if (constructor == null) {
             return;
@@ -100,7 +100,7 @@ public class QuickBind {
 
         //noinspection TryWithIdenticalCatches Resolves to API 19+ only type.
         try {
-            constructor.newInstance(target, source);
+            BINDEDMAP.put(targetClass, (Databinder)constructor.newInstance(target, source));
         } catch (IllegalAccessException e) {
             throw new RuntimeException("Unable to invoke " + constructor, e);
         } catch (InstantiationException e) {
@@ -118,13 +118,13 @@ public class QuickBind {
     }
 
     @VisibleForTesting
-    static final Map<Class<?>, Constructor<? extends Unbinder>> BINDINGS = new LinkedHashMap<>();
+    static final Map<Class<?>, Constructor<? extends Databinder>> BINDINGS = new LinkedHashMap<>();
 
     @Nullable
     @CheckResult
     @UiThread
-    private static Constructor<? extends Unbinder> findBindingConstructorForClass(Class<?> cls) {
-        Constructor<? extends Unbinder> bindingCtor = BINDINGS.get(cls);
+    private static Constructor<? extends Databinder> findBindingConstructorForClass(Class<?> cls) {
+        Constructor<? extends Databinder> bindingCtor = BINDINGS.get(cls);
         if (bindingCtor != null || BINDINGS.containsKey(cls)) {
             return bindingCtor;
         }
@@ -138,7 +138,7 @@ public class QuickBind {
         try {
             Class<?> bindingClass = cls.getClassLoader().loadClass(clsPackage + ".Quick_" + clsSimpleName + "_ViewBinding");
             //noinspection unchecked
-            bindingCtor = (Constructor<? extends Unbinder>) bindingClass.getConstructor(cls, View.class);
+            bindingCtor = (Constructor<? extends Databinder>) bindingClass.getConstructor(cls, View.class);
         } catch (ClassNotFoundException e) {
             bindingCtor = findBindingConstructorForClass(cls.getSuperclass());
         } catch (NoSuchMethodException e) {
@@ -151,14 +151,14 @@ public class QuickBind {
     public static void dealAllField(Object obj, ViewModel viewModel) {
         if (obj == null) return;
         try {
-            List<Field> fields = getAllField(obj);
+            List<Field> fields = ReflectHelper.getFieldWithParent(obj);
             for (Field field : fields) {
                 for (FieldAnnBasePlugin plugin : plugins) {
                     plugin.dealField(obj, null, field);
                 }
             }
             if (viewModel != null) {
-                Field[] viewModelFields = viewModel.getClass().getDeclaredFields();
+                List<Field> viewModelFields = ReflectHelper.getFieldWithParent(viewModel);
                 for (Field field : viewModelFields) {
                     for (FieldAnnBasePlugin plugin : plugins) {
                         plugin.dealField(obj, viewModel, field);
@@ -169,33 +169,6 @@ public class QuickBind {
             e.printStackTrace();
         }
     }
-
-    public static List<Field> getAllField(@NonNull Object obj) {
-        ArrayList<Field> result = new ArrayList<>();
-        Class<?> curCls = obj.getClass();
-        if (obj instanceof Activity) {
-            while (curCls != null) {
-                result.addAll(Arrays.asList(curCls.getDeclaredFields()));
-                curCls = curCls.getSuperclass();
-                if (curCls == AppCompatActivity.class) {
-                    break;
-                }
-            }
-            return result;
-        } else if (obj instanceof Fragment) {
-            while (curCls != null) {
-                result.addAll(Arrays.asList(curCls.getDeclaredFields()));
-                curCls = ((Class<?>) curCls).getSuperclass();
-                if (curCls == Fragment.class) {
-                    break;
-                }
-            }
-            return result;
-        } else {
-            result.addAll(Arrays.asList(curCls.getDeclaredFields()));
-        }
-        return result;
-}
 
     public static void setBindSpFileName(String bindSpFileName) {
         QuickBind.bindSpFileName = bindSpFileName;

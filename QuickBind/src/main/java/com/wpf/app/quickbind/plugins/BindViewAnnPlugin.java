@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 
 /**
  * Created by 王朋飞 on 2022/6/15.
- * 给主工程使用
+ * 给主工程R使用
  */
 public class BindViewAnnPlugin implements FieldAnnBasePlugin {
 
@@ -25,7 +25,7 @@ public class BindViewAnnPlugin implements FieldAnnBasePlugin {
             BindView findViewA = field.getAnnotation(BindView.class);
             if (findViewA != null) {
                 field.setAccessible(true);
-                if (field.get(obj) != null) {
+                if (field.get(getRealObj(obj, viewModel)) != null) {
                     return;
                 }
                 View findView = findView(obj, findViewA.value());

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class AutoGetAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(Object obj, ViewModel viewModel, Field field) {
+    public void dealField(@NonNull Object obj, ViewModel viewModel, @NonNull Field field) {
         setFieldData(obj, viewModel, field);
     }
 

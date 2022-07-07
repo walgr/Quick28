@@ -3,11 +3,11 @@ package com.wpf.app.quickbind.plugins;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.wpf.app.quickbind.BindBaseHelper;
 import com.wpf.app.quickbind.annotations.BindData2View;
+import com.wpf.app.quickbind.utils.ReflectHelper;
 
 import java.lang.reflect.Field;
 
@@ -22,16 +22,30 @@ public class BindData2ViewAnnPlugin implements FieldAnnBasePlugin {
             BindData2View bindData2View = field.getAnnotation(BindData2View.class);
             if (bindData2View == null) return;
             int id = bindData2View.id();
-            Class<BindBaseHelper> helper = (Class<BindBaseHelper>) bindData2View.helper();
-            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) obj.getClass().getMethod("getViewHolder").invoke(obj);
-            View findView = findView(viewHolder, id);
+            Class<BindBaseHelper<Object, Object>> helper = (Class<BindBaseHelper<Object, Object>>) bindData2View.helper();
+            Object viewParent = obj;
+            if (parentClassIs(obj.getClass(), "QuickBindData")) {
+                viewParent = obj.getClass().getMethod("getViewHolder").invoke(obj);
+            }
+            View findView = findView(viewParent, id);
             field.setAccessible(true);
-            Object value = field.get(obj);
+            Object value = field.get(getRealObj(obj, viewModel));
             if (findView == null || value == null) return;
-            BindBaseHelper<View, Object> bindBaseHelper = helper.newInstance();
+            BindBaseHelper<Object, Object> bindBaseHelper = helper.newInstance();
             bindBaseHelper.initView(findView, value);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean parentClassIs(@NonNull Class<?> cur, @NonNull String parentName) {
+        while (!parentName.equals(cur.getSimpleName())) {
+            cur = cur.getSuperclass();
+            if (ReflectHelper.canBreakScan(cur)) return false;
+            if (cur.getSimpleName().equals(parentName)) {
+                return true;
+            }
+        }
+        return true;
     }
 }

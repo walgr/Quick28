@@ -37,7 +37,7 @@
         <activity android:name=".RecyclerViewTestActivity" />
         <activity android:name=".IntentDataTestActivity" />
         <activity android:name=".GlideImageTestActivity" />
-        <activity android:name="com.wpf.app.quick.base.activity.TestActivity" />
+        <activity android:name="com.wpf.app.quick.base.test.R2TestActivity" />
 
     </application>
 

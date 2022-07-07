@@ -2,18 +2,22 @@ package com.wpf.app.quick.compiler;
 
 import com.google.common.collect.ImmutableList;
 import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.TypeVariableName;
 import com.squareup.javapoet.WildcardTypeName;
 import com.wpf.app.quick.annotations.internal.ListenerClass;
 import com.wpf.app.quick.annotations.internal.ListenerMethod;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -53,7 +57,7 @@ final class BindingSet implements BindingInformationProvider {
             ClassName.get("android.support.annotation", "CallSuper");
     private static final ClassName SUPPRESS_LINT =
             ClassName.get("android.annotation", "SuppressLint");
-    private static final ClassName UNBINDER = ClassName.get("com.wpf.app.quick.runtime", "Unbinder");
+    private static final ClassName UNBINDER = ClassName.get("com.wpf.app.quick.runtime", "Databinder");
     static final ClassName BITMAP_FACTORY = ClassName.get("android.graphics", "BitmapFactory");
     static final ClassName CONTEXT_COMPAT =
             ClassName.get("android.core.content", "ContextCompat");
@@ -74,6 +78,7 @@ final class BindingSet implements BindingInformationProvider {
     BindingInformationProvider parentBinding;
 
     static final String Quick = "Quick_";
+    static final String GroupViews = "groupViews";
 
     private BindingSet(
             TypeName targetTypeName, ClassName bindingClassName, TypeElement enclosingElement,
@@ -121,17 +126,22 @@ final class BindingSet implements BindingInformationProvider {
             result.addSuperinterface(UNBINDER);
         }
 
-        if (hasTargetField()) {
-            result.addField(targetTypeName, "target", PRIVATE);
+        if (viewBindings != null) {
             for (ViewBinding viewBinding : viewBindings) {
-                viewBinding.getRequiredBindings();
-                for (MemberViewBinding memberViewBinding : viewBinding.getRequiredBindings()) {
-                    if (memberViewBinding instanceof FieldViewBinding) {
-                        FieldViewBinding fieldViewBinding = (FieldViewBinding) memberViewBinding;
-                        result.addField(int.class, fieldViewBinding.getName() + "Id", PRIVATE);
-                    }
+                if (viewBinding.isSingleFieldBinding() && viewBinding.getFieldBinding().isGroupView()) {
+                    //添加groupView集合
+                    FieldSpec groupFS = FieldSpec.builder(ParameterizedTypeName.get(ArrayList.class, Integer.class),
+                                    viewBinding.getFieldBinding().getName())
+                            .addModifiers(PRIVATE)
+                            .initializer("new ArrayList<>()")
+                            .build();
+                    result.addField(groupFS);
                 }
             }
+        }
+
+        if (hasTargetField()) {
+            result.addField(targetTypeName, "target", PRIVATE);
         }
 
         if (isView) {
@@ -381,7 +391,7 @@ final class BindingSet implements BindingInformationProvider {
         if (binding.isSingleFieldBinding()) {
             // Optimize the common case where there's a single binding directly to a field.
             FieldViewBinding fieldBinding = requireNonNull(binding.getFieldBinding());
-            if (!fieldBinding.isOnlyDealSaveId()) {
+            if (!fieldBinding.isGroupView()) {
                 CodeBlock.Builder builder = CodeBlock.builder()
                         .add("target.$L = ", fieldBinding.getName());
 
@@ -408,11 +418,13 @@ final class BindingSet implements BindingInformationProvider {
                 }
                 result.addStatement("$L", builder.build());
             }
-            if (fieldBinding.isDealSaveId()) {
-                CodeBlock.Builder builderSaveId = CodeBlock.builder()
-                        .add("this.$L = ", fieldBinding.getName() + "Id");
-                builderSaveId.add("$L", binding.getId().code);
-                result.addStatement("$L", builderSaveId.build());
+
+            if (binding.getFieldBinding().isGroupView()) {
+                for (Id id : binding.getIds()) {
+                    result.addStatement("$L", CodeBlock.builder()
+                            .add("this." + binding.getFieldBinding().getName() + ".add($L)", id.code)
+                            .build());
+                }
             }
             return;
         }
@@ -756,6 +768,7 @@ final class BindingSet implements BindingInformationProvider {
         BindingInformationProvider parentBinding;
 
         private final Map<Id, ViewBinding.Builder> viewIdMap = new LinkedHashMap<>();
+        private final Map<Id[], ViewBinding.Builder> viewIdsMap = new LinkedHashMap<>();
         private final ImmutableList.Builder<FieldCollectionViewBinding> collectionBindings =
                 ImmutableList.builder();
         private final ImmutableList.Builder<ResourceBinding> resourceBindings = ImmutableList.builder();
@@ -774,6 +787,10 @@ final class BindingSet implements BindingInformationProvider {
 
         void addField(Id id, FieldViewBinding binding) {
             getOrCreateViewBindings(id).setFieldBinding(binding);
+        }
+
+        void addField(Id[] ids, FieldViewBinding binding) {
+            getOrCreateViewBindings(ids).setFieldBinding(binding);
         }
 
         void addFieldCollection(FieldCollectionViewBinding binding) {
@@ -814,6 +831,19 @@ final class BindingSet implements BindingInformationProvider {
             return fieldBinding.getName();
         }
 
+        @Nullable
+        String findExistingBindingName(Id[] ids) {
+            ViewBinding.Builder builder = viewIdsMap.get(ids);
+            if (builder == null) {
+                return null;
+            }
+            FieldViewBinding fieldBinding = builder.fieldBinding;
+            if (fieldBinding == null) {
+                return null;
+            }
+            return fieldBinding.getName();
+        }
+
         private ViewBinding.Builder getOrCreateViewBindings(Id id) {
             ViewBinding.Builder viewId = viewIdMap.get(id);
             if (viewId == null) {
@@ -823,9 +853,21 @@ final class BindingSet implements BindingInformationProvider {
             return viewId;
         }
 
+        private ViewBinding.Builder getOrCreateViewBindings(Id[] ids) {
+            ViewBinding.Builder viewId = viewIdsMap.get(ids);
+            if (viewId == null) {
+                viewId = new ViewBinding.Builder(ids);
+                viewIdsMap.put(ids, viewId);
+            }
+            return viewId;
+        }
+
         BindingSet build() {
             ImmutableList.Builder<ViewBinding> viewBindings = ImmutableList.builder();
             for (ViewBinding.Builder builder : viewIdMap.values()) {
+                viewBindings.add(builder.build());
+            }
+            for (ViewBinding.Builder builder : viewIdsMap.values()) {
                 viewBindings.add(builder.build());
             }
             return new BindingSet(targetTypeName, bindingClassName, enclosingElement, isFinal, isView,

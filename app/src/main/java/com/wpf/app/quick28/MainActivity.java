@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.wpf.app.quick.annotations.BindView;
-import com.wpf.app.quick.base.activity.TestActivity;
+import com.wpf.app.quick.base.test.R2TestActivity;
 import com.wpf.app.quick.base.activity.ViewModelBindingActivity;
 import com.wpf.app.quickbind.annotations.BindSp2View;
 import com.wpf.app.quick28.databinding.ActivityMainBinding;
@@ -50,7 +50,7 @@ public class MainActivity extends ViewModelBindingActivity<MainViewModel, Activi
     }
 
     public void gotoR2Test(View view) {
-        startActivity(TestActivity.class);
+        startActivity(R2TestActivity.class);
     }
 
     public void gotoGlide(View view) {

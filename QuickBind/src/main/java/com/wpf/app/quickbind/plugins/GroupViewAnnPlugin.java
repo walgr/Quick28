@@ -9,6 +9,7 @@ import com.wpf.app.quick.annotations.GroupView;
 import com.wpf.app.quickbind.GroupViews;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 /**
  * Created by 王朋飞 on 2022/7/6.
@@ -21,10 +22,20 @@ public class GroupViewAnnPlugin implements FieldAnnBasePlugin {
         if (groupViewA == null) return;
         field.setAccessible(true);
         GroupViews groupViews = new GroupViews();
-        for (int id : groupViewA.idList()) {
-            View findView = findView(obj, id);
-            if (findView != null) {
-                groupViews.viewList.add(findView);
+        ArrayList<Integer> R2IdList = getSaveIdList(obj, viewModel, field);
+        if (R2IdList != null) {
+            for (int id : R2IdList) {
+                View findView = findView(obj, id);
+                if (findView != null) {
+                    groupViews.viewList.add(findView);
+                }
+            }
+        } else {
+            for (int id : groupViewA.idList()) {
+                View findView = findView(obj, id);
+                if (findView != null) {
+                    groupViews.viewList.add(findView);
+                }
             }
         }
         try {
