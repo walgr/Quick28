@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.wpf.app.quick.annotations.BindView;
 import com.wpf.app.quick.annotations.GroupView;
 import com.wpf.app.quick.base.activity.ViewModelBindingActivity;
-import com.wpf.app.quickbind.GroupViews;
+import com.wpf.app.quickbind.utils.GroupViews;
 import com.wpf.app.quick28.databinding.ActivityDataTestBinding;
 import com.wpf.app.quick28.viewmodel.IntentDataTestViewModel;
 

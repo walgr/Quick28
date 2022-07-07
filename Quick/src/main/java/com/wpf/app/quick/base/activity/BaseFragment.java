@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wpf.app.quick.annotations.AutoGet;
-import com.wpf.app.quickbind.BindBaseFragment;
+import com.wpf.app.quickbind.interfaces.BindBaseFragment;
 import com.wpf.app.quickbind.QuickBind;
 
 /**

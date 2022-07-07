@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.wpf.app.quickbind.BindBaseFragment;
+import com.wpf.app.quickbind.interfaces.BindBaseFragment;
 
 import java.util.List;
 

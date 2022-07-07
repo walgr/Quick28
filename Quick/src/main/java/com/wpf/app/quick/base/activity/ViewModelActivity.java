@@ -4,7 +4,7 @@ package com.wpf.app.quick.base.activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.view.View;
 
-import com.wpf.app.quickbind.BindViewModel;
+import com.wpf.app.quickbind.interfaces.BindViewModel;
 import com.wpf.app.quickbind.QuickBind;
 import com.wpf.app.quick.base.utils.ViewMolderEx;
 import com.wpf.app.quick.base.viewmodel.BaseViewModel;

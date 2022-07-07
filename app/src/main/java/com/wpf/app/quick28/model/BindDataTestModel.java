@@ -5,7 +5,7 @@ import android.annotation.SuppressLint;
 import com.wpf.app.quick.base.helper.binddatahelper.Url2ImageView;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickBindData;
 import com.wpf.app.quick28.R;
-import com.wpf.app.quickbind.annotations.BindData2View;
+import com.wpf.app.quick.annotations.BindData2View;
 
 /**
  * Created by 王朋飞 on 2022/7/5.

@@ -11,8 +11,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.wpf.app.quickbind.BindBaseFragment;
-import com.wpf.app.quickbind.BindViewModel;
+import com.wpf.app.quickbind.interfaces.BindBaseFragment;
+import com.wpf.app.quickbind.interfaces.BindViewModel;
 import com.wpf.app.quickbind.annotations.BindFragment;
 import com.wpf.app.quickbind.viewpager.ViewPagerSize;
 

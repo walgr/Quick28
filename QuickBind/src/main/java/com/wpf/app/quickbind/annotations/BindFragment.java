@@ -1,6 +1,6 @@
 package com.wpf.app.quickbind.annotations;
 
-import com.wpf.app.quickbind.BindBaseFragment;
+import com.wpf.app.quickbind.interfaces.BindBaseFragment;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

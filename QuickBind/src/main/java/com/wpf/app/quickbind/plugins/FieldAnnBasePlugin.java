@@ -28,8 +28,19 @@ public interface FieldAnnBasePlugin {
         return obj;
     }
 
+    default int getSaveId(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field, int id) {
+        Databinder databinder = QuickBind.BINDEDMAP.get(getRealObj(obj, viewModel).getClass());
+        if (databinder == null) return id;
+        Object value = databinder.getFieldValue(field.getName() + "BindViewId");
+        if (value instanceof Integer) {
+            return (int) value;
+        }
+        return id;
+    }
+
     default @Nullable ArrayList<Integer> getSaveIdList(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         Databinder databinder = QuickBind.BINDEDMAP.get(getRealObj(obj, viewModel).getClass());
+        if (databinder == null) return null;
         Object value = databinder.getFieldValue(field.getName());
         if (value instanceof ArrayList) {
             return (ArrayList<Integer>) value;

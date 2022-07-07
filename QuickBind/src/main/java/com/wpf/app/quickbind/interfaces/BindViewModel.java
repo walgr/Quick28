@@ -1,4 +1,4 @@
-package com.wpf.app.quickbind;
+package com.wpf.app.quickbind.interfaces;
 
 import android.arch.lifecycle.ViewModel;
 

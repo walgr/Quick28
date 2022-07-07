@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.wpf.app.quickbind.BindBaseFragment;
+import com.wpf.app.quickbind.interfaces.BindBaseFragment;
 import com.wpf.app.quickbind.annotations.BindFragments;
 import com.wpf.app.quickbind.viewpager.adapter.FragmentsAdapter;
 import com.wpf.app.quickbind.viewpager.adapter.FragmentsStateAdapter;

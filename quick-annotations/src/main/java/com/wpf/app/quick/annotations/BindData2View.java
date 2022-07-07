@@ -1,7 +1,6 @@
-package com.wpf.app.quickbind.annotations;
+package com.wpf.app.quick.annotations;
 
 import android.support.annotation.IdRes;
-import com.wpf.app.quickbind.BindBaseHelper;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -15,5 +14,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BindData2View {
     @IdRes int id();
-    Class<? extends BindBaseHelper<?, ?>> helper();
+    Class<? extends BindD2VBaseHelper<?, ?>> helper();
 }

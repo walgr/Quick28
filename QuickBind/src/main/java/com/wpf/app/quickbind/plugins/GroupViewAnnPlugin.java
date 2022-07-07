@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.wpf.app.quick.annotations.GroupView;
-import com.wpf.app.quickbind.GroupViews;
+import com.wpf.app.quickbind.utils.GroupViews;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
