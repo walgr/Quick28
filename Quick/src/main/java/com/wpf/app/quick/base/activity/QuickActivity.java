@@ -15,27 +15,30 @@ import java.util.Map;
  * Created by 王朋飞 on 2022/5/20.
  * layoutId、layoutView 必须有1个，同时存在时layoutView有效
  */
-public class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class QuickActivity extends AppCompatActivity implements QuickView {
 
     protected @LayoutRes
     int layoutId;
     private View layoutView;
     String activityTitle = "";
 
-    public BaseActivity(@LayoutRes int layoutId) {
+    public QuickActivity() {
+    }
+
+    public QuickActivity(@LayoutRes int layoutId) {
         this.layoutId = layoutId;
     }
 
-    public BaseActivity(View layoutView) {
+    public QuickActivity(View layoutView) {
         this.layoutView = layoutView;
     }
 
-    public BaseActivity(int layoutId, String activityTitle) {
+    public QuickActivity(int layoutId, String activityTitle) {
         this.layoutId = layoutId;
         this.activityTitle = activityTitle;
     }
 
-    public BaseActivity(View layoutView, String activityTitle) {
+    public QuickActivity(View layoutView, String activityTitle) {
         this.layoutView = layoutView;
         this.activityTitle = activityTitle;
     }
@@ -49,10 +52,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         setTitle();
     }
 
-    @Override
-    public void initView() {
-
-    }
+    public abstract void initView();
 
     private void setTitle() {
         if (activityTitle != null && !activityTitle.isEmpty()) {

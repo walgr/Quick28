@@ -1,12 +1,12 @@
 package com.wpf.app.quick.annotations;
 
 import android.support.annotation.IdRes;
+import android.view.View;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
 /**
  * Created by 王朋飞 on 2022/7/5.
  */
@@ -14,5 +14,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BindData2View {
     @IdRes int id();
-    Class<? extends BindD2VBaseHelper<?, ?>> helper();
+    Class<? extends BindD2VBaseHelper<? extends View, ?>> helper();
 }

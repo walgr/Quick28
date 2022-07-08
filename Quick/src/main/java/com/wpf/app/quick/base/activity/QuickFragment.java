@@ -18,7 +18,7 @@ import com.wpf.app.quickbind.QuickBind;
  * Created by 王朋飞 on 2022/6/15.
  */
 @SuppressLint("ValidFragment")
-public class BaseFragment extends BindBaseFragment implements BaseView {
+public abstract class QuickFragment extends BindBaseFragment implements QuickView {
 
     protected @LayoutRes
     int layoutId;
@@ -28,15 +28,15 @@ public class BaseFragment extends BindBaseFragment implements BaseView {
 
     private final static String titleKey = "title";
 
-    public BaseFragment(@LayoutRes int layoutId) {
+    public QuickFragment(@LayoutRes int layoutId) {
         this.layoutId = layoutId;
     }
 
-    public BaseFragment(@NonNull View layoutView) {
+    public QuickFragment(@NonNull View layoutView) {
         this.layoutView = layoutView;
     }
 
-    public BaseFragment(@LayoutRes int layoutId, String title) {
+    public QuickFragment(@LayoutRes int layoutId, String title) {
         this.layoutId = layoutId;
         this.title = title;
         Bundle bundle = new Bundle();
@@ -44,7 +44,7 @@ public class BaseFragment extends BindBaseFragment implements BaseView {
         setArguments(bundle);
     }
 
-    public BaseFragment(@NonNull View layoutView, String title) {
+    public QuickFragment(@NonNull View layoutView, String title) {
         this.layoutView = layoutView;
         this.title = title;
         Bundle bundle = new Bundle();
@@ -52,10 +52,7 @@ public class BaseFragment extends BindBaseFragment implements BaseView {
         setArguments(bundle);
     }
 
-    @CallSuper
-    public void initView(View view) {
-
-    }
+    public abstract void initView(View view);
 
     @Nullable
     @Override
@@ -78,13 +75,6 @@ public class BaseFragment extends BindBaseFragment implements BaseView {
     public void viewCreated(View view) {
         QuickBind.bind(this);
         initView(view);
-        initView();
-    }
-
-    @Override
-    @CallSuper
-    public void initView() {
-
     }
 
     public @Nullable

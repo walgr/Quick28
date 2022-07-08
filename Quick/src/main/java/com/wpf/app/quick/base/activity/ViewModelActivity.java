@@ -12,7 +12,7 @@ import com.wpf.app.quick.base.viewmodel.BaseViewModel;
 /**
  * Created by 王朋飞 on 2022/5/20.
  */
-public class ViewModelActivity<VM extends BaseViewModel<H>, H extends BaseView> extends BaseActivity implements BindViewModel<VM> {
+public abstract class ViewModelActivity<VM extends BaseViewModel<H>, H extends QuickView> extends QuickActivity implements BindViewModel<VM> {
 
     private VM mViewModel;
 

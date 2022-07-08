@@ -13,7 +13,7 @@ import com.wpf.app.quick.base.widgets.recyclerview.QuickRecyclerView;
  * Created by 王朋飞 on 2022/6/15.
  */
 
-public class RModelFragment<VM extends BaseViewModel<H>, H extends BaseView> extends ViewModelFragment<VM, H> {
+public class RModelFragment<VM extends BaseViewModel<H>, H extends QuickView> extends ViewModelFragment<VM, H> {
 
     protected QuickRecyclerView mRecyclerView;
     protected @IdRes

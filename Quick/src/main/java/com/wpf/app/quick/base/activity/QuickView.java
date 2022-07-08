@@ -3,7 +3,9 @@ package com.wpf.app.quick.base.activity;
 /**
  * Created by 王朋飞 on 2022/5/20.
  */
-public interface BaseView {
+public interface QuickView {
 
-    void initView();
+    default void initView() {
+
+    }
 }

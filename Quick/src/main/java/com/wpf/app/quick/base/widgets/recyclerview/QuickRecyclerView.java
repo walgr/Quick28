@@ -1,10 +1,14 @@
 package com.wpf.app.quick.base.widgets.recyclerview;
 
 import android.content.Context;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+
+import java.util.List;
 
 /**
  * Created by 王朋飞 on 2022/5/20.
@@ -26,7 +30,9 @@ public class QuickRecyclerView extends RecyclerView {
 
     protected QuickAdapter mQuickAdapter;
 
-    private void init() {
+    @CallSuper
+    protected void init() {
+        setLayoutManager(new LinearLayoutManager(getContext()));
         mQuickAdapter = new QuickAdapter();
         setAdapter(mQuickAdapter);
     }

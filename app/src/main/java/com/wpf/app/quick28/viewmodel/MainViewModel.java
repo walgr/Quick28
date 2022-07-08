@@ -1,6 +1,7 @@
 package com.wpf.app.quick28.viewmodel;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.Nullable;
 
 import com.wpf.app.quick.base.helper.binddatahelper.Text2TextView;
 import com.wpf.app.quick.base.viewmodel.BindingViewModel;
@@ -16,4 +17,9 @@ public class MainViewModel extends BindingViewModel<ActivityMainBinding> {
     @SuppressLint("NonConstantResourceId")
     @BindData2View(id = R.id.spTextView1, helper = Text2TextView.class)
     String title = "测试BindData2View";
+
+    @Override
+    public void onBindingCreate(@Nullable ActivityMainBinding mViewBinding) {
+
+    }
 }

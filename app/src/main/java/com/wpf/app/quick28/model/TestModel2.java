@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.databinding.Bindable;
 import android.support.annotation.NonNull;
 
-import com.wpf.app.quick.base.widgets.recyclerview.HolderBindingLayout;
+import com.wpf.app.quick.base.widgets.recyclerview.BindLayout;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickViewDataBinding;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickViewBindingHolder;
 import com.wpf.app.quick28.BR;
@@ -15,7 +15,7 @@ import com.wpf.app.quick28.databinding.HolderTest2Binding;
  * Created by 王朋飞 on 2022/6/13.
  */
 @SuppressLint("NonConstantResourceId")
-@HolderBindingLayout(layout = R.layout.holder_test2)
+@BindLayout(value = R.layout.holder_test2)
 public class TestModel2 extends QuickViewDataBinding<HolderTest2Binding> {
 
     @Bindable

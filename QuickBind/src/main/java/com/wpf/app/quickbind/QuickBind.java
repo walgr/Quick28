@@ -149,6 +149,10 @@ public class QuickBind {
     }
 
     public static void dealAllField(Object obj, ViewModel viewModel) {
+        dealAllField(obj, viewModel, plugins);
+    }
+
+    public static void dealAllField(Object obj, ViewModel viewModel, ArrayList<FieldAnnBasePlugin> plugins) {
         if (obj == null) return;
         try {
             List<Field> fields = ReflectHelper.getFieldWithParent(obj);

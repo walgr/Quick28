@@ -43,7 +43,6 @@ public class MainActivity extends ViewModelBindingActivity<MainViewModel, Activi
     @SuppressLint("SetTextI18n")
     @Override
     public void initView() {
-        super.initView();
         text1.postDelayed(() -> text1.setText(System.currentTimeMillis() + ""), 1000);
         text2.postDelayed(() -> text2.setText(System.currentTimeMillis() + ""), 1000);
         text3.postDelayed(() -> text3.setText(System.currentTimeMillis() + ""), 1000);
@@ -55,6 +54,10 @@ public class MainActivity extends ViewModelBindingActivity<MainViewModel, Activi
 
     public void gotoGlide(View view) {
 
+    }
+
+    public void gotoRefreshList(View view) {
+        startActivity(RefreshListTestActivity.class);
     }
 
     public void gotoList(View view) {

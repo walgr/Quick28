@@ -12,7 +12,7 @@ import com.wpf.app.quick.base.viewmodel.BindingViewModel;
 /**
  * Created by 王朋飞 on 2022/5/20.
  */
-public class ViewModelBindingActivity<VM extends BindingViewModel<VB>, VB extends ViewDataBinding> extends BaseActivity {
+public class ViewModelBindingActivity<VM extends BindingViewModel<VB>, VB extends ViewDataBinding> extends QuickActivity {
 
     protected VM mViewModel;
 
@@ -61,7 +61,6 @@ public class ViewModelBindingActivity<VM extends BindingViewModel<VB>, VB extend
 
     @Override
     public void initView() {
-        super.initView();
         initView(viewBinding);
     }
 

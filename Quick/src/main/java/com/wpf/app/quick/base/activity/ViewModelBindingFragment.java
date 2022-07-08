@@ -20,7 +20,7 @@ import com.wpf.app.quick.base.viewmodel.BindingViewModel;
  * Created by 王朋飞 on 2022/6/15.
  */
 @SuppressLint("ValidFragment")
-public class ViewModelBindingFragment<VM extends BindingViewModel<VB>, VB extends ViewDataBinding> extends BaseFragment {
+public abstract class ViewModelBindingFragment<VM extends BindingViewModel<VB>, VB extends ViewDataBinding> extends QuickFragment {
 
     protected VM mViewModel;
 
@@ -38,6 +38,11 @@ public class ViewModelBindingFragment<VM extends BindingViewModel<VB>, VB extend
 
     public ViewModelBindingFragment(@NonNull View layoutView, String title) {
         super(layoutView, title);
+    }
+
+    @Override
+    public void initView(View view) {
+
     }
 
     public void setViewModel(VM viewModel) {
@@ -86,7 +91,5 @@ public class ViewModelBindingFragment<VM extends BindingViewModel<VB>, VB extend
         }
     }
 
-    public void initView(@Nullable VB viewDataBinding) {
-
-    }
+    public abstract void initView(@Nullable VB viewDataBinding);
 }

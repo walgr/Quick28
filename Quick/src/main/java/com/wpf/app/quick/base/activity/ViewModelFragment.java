@@ -16,7 +16,7 @@ import com.wpf.app.quick.base.viewmodel.BaseViewModel;
  * Created by 王朋飞 on 2022/6/15.
  */
 @SuppressLint("ValidFragment")
-public class ViewModelFragment<VM extends BaseViewModel<H>, H extends BaseView> extends BaseFragment {
+public class ViewModelFragment<VM extends BaseViewModel<H>, H extends QuickView> extends QuickFragment {
 
     protected VM mViewModel;
 
@@ -40,7 +40,6 @@ public class ViewModelFragment<VM extends BaseViewModel<H>, H extends BaseView> 
     @Override
     public void initView(View view) {
         initViewModel();
-        super.initView(view);
     }
 
     public void initViewModel() {

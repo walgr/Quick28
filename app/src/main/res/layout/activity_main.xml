@@ -37,6 +37,13 @@
             android:onClick="gotoR2Test"
             />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="列表刷新测试"
+            android:onClick="gotoRefreshList"
+            />
+
         <LinearLayout
             android:id="@+id/testBindSpLL"
             android:layout_width="match_parent"

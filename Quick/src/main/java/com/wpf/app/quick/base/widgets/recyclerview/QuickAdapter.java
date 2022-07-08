@@ -59,7 +59,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
     }
 
     public @Nullable
-    <T extends QuickItemData> ArrayList<T> getRealData() {
+    <T extends QuickItemData> ArrayList<T> getRealTypeData() {
         return (ArrayList<T>) this.mDataList;
     }
 
@@ -68,16 +68,16 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
     public QuickViewHolder<QuickItemData> onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         QuickItemData findData = findDataByViewType(i);
         if (findData instanceof QuickViewDataBinding) {
-            HolderBindingLayout holderAnnotationLayout = findData.getClass().getAnnotation(HolderBindingLayout.class);
+            BindLayout holderAnnotationLayout = findData.getClass().getAnnotation(BindLayout.class);
             if (holderAnnotationLayout != null) {
                 QuickViewBindingHolder bindingHolder = new QuickViewBindingHolder(
-                        viewGroup, holderAnnotationLayout.layout()
+                        viewGroup, holderAnnotationLayout.value()
                 );
                 bindingHolder.setViewData((QuickViewDataBinding) findData);
                 bindingHolder.onCreateViewHolder(bindingHolder.itemView);
                 return bindingHolder;
             }
-            HolderBindingClass holderAnnotationClass = findData.getClass().getAnnotation(HolderBindingClass.class);
+            BindHolder holderAnnotationClass = findData.getClass().getAnnotation(BindHolder.class);
             if (holderAnnotationClass != null) {
                 try {
                     Constructor<?> bindingHolderCls = holderAnnotationClass.holderClass().getConstructor(ViewGroup.class);

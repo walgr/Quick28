@@ -7,6 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * Created by 王朋飞 on 2022/6/13.
+ * 绑定Sp到TextView上
+ * bindSp 2者改变同步
+ * setSp view -> sp
+ * getSp sp -> view
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

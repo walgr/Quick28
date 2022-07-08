@@ -14,21 +14,21 @@ import com.wpf.app.quickbind.QuickBind;
  * Created by 王朋飞 on 2022/6/28.
  */
 @SuppressLint("ValidFragment")
-public class LazyViewBaseFragment extends BaseFragment {
+public abstract class LazyViewFragment extends QuickFragment {
 
-    public LazyViewBaseFragment(int layoutId) {
+    public LazyViewFragment(int layoutId) {
         super(layoutId);
     }
 
-    public LazyViewBaseFragment(@NonNull View layoutView) {
+    public LazyViewFragment(@NonNull View layoutView) {
         super(layoutView);
     }
 
-    public LazyViewBaseFragment(int layoutId, String title) {
+    public LazyViewFragment(int layoutId, String title) {
         super(layoutId, title);
     }
 
-    public LazyViewBaseFragment(@NonNull View layoutView, String title) {
+    public LazyViewFragment(@NonNull View layoutView, String title) {
         super(layoutView, title);
     }
 
@@ -44,13 +44,7 @@ public class LazyViewBaseFragment extends BaseFragment {
             }
             QuickBind.bind(this);
             initView(rootView);
-            initView();
         }
         return rootView;
-    }
-
-    @Override
-    public void viewCreated(View view) {
-
     }
 }
