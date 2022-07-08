@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.wpf.app.quick.annotations.BindD2VBaseHelper;
 import com.wpf.app.quick.annotations.BindData2View;
+import com.wpf.app.quick.annotations.internal.Constants;
 import com.wpf.app.quickbind.interfaces.RunOnHolder;
 import com.wpf.app.quickbind.utils.ReflectHelper;
 
@@ -23,14 +24,20 @@ public class BindData2ViewAnnPlugin implements FieldAnnBasePlugin {
         try {
             BindData2View bindData2View = field.getAnnotation(BindData2View.class);
             if (bindData2View == null) return;
-            int oldId = bindData2View.id();
-            int id = getSaveId(obj, viewModel, field, oldId);
+            int bindId = bindData2View.id();
             Class<BindD2VBaseHelper<View, Object>> helper = (Class<BindD2VBaseHelper<View, Object>>) bindData2View.helper();
             Object viewParent = obj;
+            View findView = null;
             if (parentClassIs(obj.getClass(), "QuickBindData")) {
                 viewParent = obj.getClass().getMethod("getViewHolder").invoke(obj);
+                if (viewParent instanceof RecyclerView.ViewHolder) {
+                    findView = ((RecyclerView.ViewHolder) viewParent).itemView;
+                }
             }
-            View findView = findView(viewParent, id);
+            if (bindId != Constants.NO_RES_ID) {
+                int id = getSaveId(obj, viewModel, field, bindId);
+                findView = findView(viewParent, id);
+            }
             field.setAccessible(true);
             Object value = field.get(getRealObj(obj, viewModel));
             if (findView == null || value == null) return;

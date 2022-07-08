@@ -6,7 +6,7 @@ import com.wpf.app.quick.base.utils.Callback;
 /**
  * Created by 王朋飞 on 2022/7/8.
  */
-public interface DataChangeListener<Request extends RequestData , Data extends QuickItemData> {
+public interface DataChangeListener<Request extends RequestData, Data extends QuickItemData> {
 
     /**
      * 下拉刷新
@@ -18,4 +18,17 @@ public interface DataChangeListener<Request extends RequestData , Data extends Q
      */
     void onLoadMore(Request requestData, Callback<Data> callback);
 
+    /**
+     * 刷新结束
+     */
+    default void refreshFinish() {
+
+    }
+
+    /**
+     * 加载结束
+     */
+    default void loadMoreFinish() {
+
+    }
 }

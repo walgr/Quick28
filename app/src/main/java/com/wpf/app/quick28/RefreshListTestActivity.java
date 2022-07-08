@@ -10,6 +10,7 @@ import com.wpf.app.quick.base.widgets.recyclerview.DataChangeListener;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickItemData;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickRefreshRecyclerView;
 import com.wpf.app.quick.base.widgets.recyclerview.RequestData;
+import com.wpf.app.quick28.model.ListRequest;
 import com.wpf.app.quick28.model.RefreshItem;
 
 import java.util.ArrayList;
@@ -34,12 +35,13 @@ public class RefreshListTestActivity extends QuickActivity {
 
     @Override
     public void initView() {
-        mRecyclerView.setDataChangeListener(new DataChangeListener<RequestData, RefreshItem>() {
+        mRecyclerView.setRequestData(new ListRequest(0));
+        mRecyclerView.setDataChangeListener(new DataChangeListener<ListRequest, RefreshItem>() {
             @Override
-            public void onRefresh(RequestData requestData, Callback<RefreshItem> callback) {
+            public void onRefresh(ListRequest requestData, Callback<RefreshItem> callback) {
                 new Thread(() -> {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -55,10 +57,10 @@ public class RefreshListTestActivity extends QuickActivity {
             }
 
             @Override
-            public void onLoadMore(RequestData requestData, Callback<RefreshItem> callback) {
+            public void onLoadMore(ListRequest requestData, Callback<RefreshItem> callback) {
                 new Thread(() -> {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -75,6 +77,6 @@ public class RefreshListTestActivity extends QuickActivity {
         });
         mSmartRefreshLayout.setOnRefreshListener(refreshLayout -> mRecyclerView.onRefresh());
         mSmartRefreshLayout.setOnLoadMoreListener(loadMore -> mRecyclerView.onLoadMore());
-        mSmartRefreshLayout.autoRefresh();
+        mRecyclerView.onRefresh();
     }
 }

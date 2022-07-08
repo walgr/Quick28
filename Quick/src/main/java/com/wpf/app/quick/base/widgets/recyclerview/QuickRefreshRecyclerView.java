@@ -3,12 +3,7 @@ package com.wpf.app.quick.base.widgets.recyclerview;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
-
-import com.wpf.app.quick.base.utils.Callback;
-
-import java.util.List;
 
 /**
  * Created by 王朋飞 on 2022/5/20.
@@ -29,7 +24,7 @@ public class QuickRefreshRecyclerView extends QuickRecyclerView {
         super(context, attrs, defStyle);
     }
 
-    protected DataChangeListener mDataChangeListener;
+    protected DataChangeListener<? extends RequestData, ? extends QuickItemData> mDataChangeListener;
 
     @Override
     protected void init() {
@@ -40,36 +35,39 @@ public class QuickRefreshRecyclerView extends QuickRecyclerView {
     public void onRefresh() {
         mRequestData.refresh();
         if (mDataChangeListener != null) {
-            mDataChangeListener.onRefresh(mRequestData, list -> {
+            ((DataChangeListener<RequestData, ? extends QuickItemData>)mDataChangeListener).onRefresh(mRequestData, list -> {
                 getQuickAdapter().setNewData(list);
                 getQuickAdapter().notifyDataSetChanged();
             });
+            mDataChangeListener.refreshFinish();
         }
     }
 
     public void onLoadMore() {
         mRequestData.loadMore();
         if (mDataChangeListener != null) {
-            mDataChangeListener.onLoadMore(mRequestData, list -> {
+            ((DataChangeListener<RequestData, ? extends QuickItemData>)mDataChangeListener).onLoadMore(mRequestData, list -> {
                 getQuickAdapter().appendList(list);
                 getQuickAdapter().notifyItemRangeInserted(getQuickAdapter().getItemCount() - list.size(), list.size());
             });
+            mDataChangeListener.loadMoreFinish();
         }
     }
 
-    public DataChangeListener getDataChangeListener() {
+    public DataChangeListener<? extends RequestData, ? extends QuickItemData> getDataChangeListener() {
         return mDataChangeListener;
     }
 
-    public void setDataChangeListener(DataChangeListener dataChangeListener) {
+    public <Request extends RequestData, Data extends QuickItemData> void
+    setDataChangeListener(DataChangeListener<Request, Data> dataChangeListener) {
         mDataChangeListener = dataChangeListener;
     }
 
-    public RequestData getRequestData() {
-        return mRequestData;
+    public <Request extends RequestData> Request getRequestData() {
+        return (Request) mRequestData;
     }
 
-    public void setRequestData(RequestData requestData) {
+    public <Request extends RequestData> void setRequestData(Request requestData) {
         mRequestData = requestData;
     }
 }
