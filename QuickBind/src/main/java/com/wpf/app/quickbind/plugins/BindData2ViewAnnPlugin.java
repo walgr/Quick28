@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.wpf.app.quick.annotations.BindD2VBaseHelper;
+import com.wpf.app.quick.annotations.BindD2VHelper;
 import com.wpf.app.quick.annotations.BindData2View;
 import com.wpf.app.quick.annotations.internal.Constants;
 import com.wpf.app.quickbind.interfaces.RunOnHolder;
@@ -25,7 +25,7 @@ public class BindData2ViewAnnPlugin implements FieldAnnBasePlugin {
             BindData2View bindData2View = field.getAnnotation(BindData2View.class);
             if (bindData2View == null) return;
             int bindId = bindData2View.id();
-            Class<BindD2VBaseHelper<View, Object>> helper = (Class<BindD2VBaseHelper<View, Object>>) bindData2View.helper();
+            Class<BindD2VHelper<View, Object>> helper = (Class<BindD2VHelper<View, Object>>) bindData2View.helper();
             Object viewParent = obj;
             View findView = null;
             if (parentClassIs(obj.getClass(), "QuickBindData")) {
@@ -41,9 +41,9 @@ public class BindData2ViewAnnPlugin implements FieldAnnBasePlugin {
             field.setAccessible(true);
             Object value = field.get(getRealObj(obj, viewModel));
             if (findView == null || value == null) return;
-            BindD2VBaseHelper<View, Object> bindBaseHelper = helper.newInstance();
+            BindD2VHelper<View, Object> bindBaseHelper = helper.newInstance();
             if (value instanceof RunOnHolder) {
-                bindBaseHelper.initView(findView, ((RunOnHolder<?>) value).run((RecyclerView.ViewHolder) viewParent));
+                bindBaseHelper.initView(findView, ((RunOnHolder<?>) value).run());
             } else {
                 bindBaseHelper.initView(findView, value);
             }

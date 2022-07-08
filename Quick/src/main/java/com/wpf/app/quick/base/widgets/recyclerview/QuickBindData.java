@@ -18,6 +18,8 @@ public class QuickBindData extends QuickItemData {
     protected @LayoutRes
     int layoutId;
 
+    protected boolean dealBind = true;
+
     public QuickBindData() {
     }
 
@@ -30,9 +32,15 @@ public class QuickBindData extends QuickItemData {
     @CallSuper
     public void onBindViewHolder(QuickAdapter adapter, @NonNull QuickViewHolder<? extends QuickBindData> viewHolder, int position) {
         this.mViewHolder = viewHolder;
-        QuickBind.dealAllField(this, null, new ArrayList<FieldAnnBasePlugin>() {{
-            add(new BindData2ViewAnnPlugin());
-        }});
+        if (dealBind) {
+            QuickBind.dealAllField(this, null, new ArrayList<FieldAnnBasePlugin>() {{
+                add(new BindData2ViewAnnPlugin());
+            }});
+        }
+    }
+
+    public void noBind() {
+        this.dealBind = false;
     }
 
     public QuickViewHolder<? extends QuickBindData> getViewHolder() {

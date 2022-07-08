@@ -31,7 +31,7 @@ public class R2TestActivity extends QuickActivity {
 
     @SuppressLint("NonConstantResourceId")
     @BindData2View(id = R2.id.info, helper = Text2TextView.class)
-    CharSequence title = "测试R2";
+    CharSequence title = "测试R2成功";
 
     public R2TestActivity() {
         super(R.layout.fragment_recyclerview, "测试R2");

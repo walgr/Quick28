@@ -17,5 +17,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BindData2View {
     @IdRes int id() default Constants.NO_RES_ID;
-    Class<? extends BindD2VBaseHelper<? extends View, ?>> helper();
+    Class<? extends BindD2VHelper<? extends View, ?>> helper();
 }

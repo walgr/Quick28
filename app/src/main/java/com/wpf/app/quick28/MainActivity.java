@@ -60,6 +60,10 @@ public class MainActivity extends ViewModelBindingActivity<MainViewModel, Activi
         startActivity(RefreshListTestActivity.class);
     }
 
+    public void gotoSelectList(View view) {
+        startActivity(SelectListTestActivity.class);
+    }
+
     public void gotoList(View view) {
         startActivity(RecyclerViewTestActivity.class);
     }

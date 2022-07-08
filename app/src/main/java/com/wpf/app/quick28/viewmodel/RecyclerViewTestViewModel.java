@@ -29,8 +29,4 @@ public class RecyclerViewTestViewModel extends BindingViewModel<ActivityRecycler
         getViewBinding().list.getQuickAdapter().addData(new BindDataTestModel());
         getViewBinding().list.getQuickAdapter().notifyDataSetChanged();
     }
-
-    public void addOtherCome(View view) {
-
-    }
 }
