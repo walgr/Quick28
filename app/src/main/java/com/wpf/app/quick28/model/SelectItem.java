@@ -24,7 +24,7 @@ public class SelectItem extends QuickSelectData {
 
     @SuppressLint("NonConstantResourceId")
     @BindData2View(id = R.id.select, helper = Select2CheckBox.class)
-    boolean isSelect;
+    boolean isSelect = true;
 
     @SuppressLint("NonConstantResourceId")
     @BindData2View(id = R.id.title, helper = Text2TextView.class)
@@ -33,7 +33,7 @@ public class SelectItem extends QuickSelectData {
     @BindData2View(helper = ItemClick.class)
     RunItemClick itemClick = () -> v -> {
         isSelect = !isSelect;
-        Toast.makeText(v.getContext(), "点击" + getViewHolder().getAdapterPosition(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(v.getContext(), "点击" + title.run().toString(), Toast.LENGTH_SHORT).show();
         getViewHolder().getQuickAdapter().notifyItemChanged(getViewHolder().getAdapterPosition());
     };
 }

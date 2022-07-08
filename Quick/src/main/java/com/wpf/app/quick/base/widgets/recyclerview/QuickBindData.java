@@ -9,6 +9,7 @@ import com.wpf.app.quickbind.plugins.BindData2ViewAnnPlugin;
 import com.wpf.app.quickbind.plugins.FieldAnnBasePlugin;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 王朋飞 on 2022/7/6.
@@ -19,6 +20,10 @@ public class QuickBindData extends QuickItemData {
     int layoutId;
 
     protected boolean dealBind = true;
+
+    private final ArrayList<FieldAnnBasePlugin> bindPlugin = new ArrayList<FieldAnnBasePlugin>() {{
+        add(new BindData2ViewAnnPlugin());
+    }};
 
     public QuickBindData() {
     }
@@ -33,9 +38,7 @@ public class QuickBindData extends QuickItemData {
     public void onBindViewHolder(QuickAdapter adapter, @NonNull QuickViewHolder<? extends QuickBindData> viewHolder, int position) {
         this.mViewHolder = viewHolder;
         if (dealBind) {
-            QuickBind.dealAllField(this, null, new ArrayList<FieldAnnBasePlugin>() {{
-                add(new BindData2ViewAnnPlugin());
-            }});
+            QuickBind.dealAllField(this, null, bindPlugin);
         }
     }
 
