@@ -3,14 +3,14 @@ package com.wpf.app.quick28.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.wpf.app.quick.base.widgets.recyclerview.HolderClass;
+import com.wpf.app.quick.base.widgets.recyclerview.BindHolder;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickItemData;
 import com.wpf.app.quick28.adapterholder.TestHolder;
 
 /**
  * Created by 王朋飞 on 2022/6/13.
  */
-@HolderClass(holderClass = TestHolder.class)
+@BindHolder(TestHolder.class)
 public class TestModel extends QuickItemData implements Parcelable {
 
     String text = "1";

@@ -23,5 +23,5 @@ public abstract class BindingViewModel<T extends ViewDataBinding> extends ViewMo
         return mViewBinding;
     }
 
-    public abstract void onBindingCreate(@Nullable T mViewBinding);
+    public abstract void onBindingCreated(@Nullable T mViewBinding);
 }

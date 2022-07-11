@@ -18,12 +18,12 @@ import java.lang.reflect.Field;
 public class LoadSpPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
+    public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         try {
             LoadSp loadSpAnn = field.getAnnotation(LoadSp.class);
-            if (loadSpAnn == null) return;
+            if (loadSpAnn == null) return false;
             Context context = getContext(obj);
-            if (context == null) return;
+            if (context == null) return true;
             String fileName = QuickBind.getBindSpFileName();
             if (!TextUtils.isEmpty(loadSpAnn.fileName())) {
                 fileName = loadSpAnn.fileName();
@@ -37,8 +37,10 @@ public class LoadSpPlugin implements FieldAnnBasePlugin {
                 Object valueObj = new Gson().fromJson(value, field.getGenericType());
                 field.set(getRealObj(obj, viewModel), valueObj);
             }
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 }

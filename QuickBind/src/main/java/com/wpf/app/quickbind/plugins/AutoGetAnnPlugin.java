@@ -21,20 +21,16 @@ import java.util.ArrayList;
 public class AutoGetAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(@NonNull Object obj, ViewModel viewModel, @NonNull Field field) {
-        setFieldData(obj, viewModel, field);
-    }
-
-    private void setFieldData(Object obj, ViewModel viewModel, Field field) {
+    public boolean dealField(@NonNull Object obj, ViewModel viewModel, @NonNull Field field) {
         AutoGet autoGet = field.getAnnotation(AutoGet.class);
-        if (autoGet == null) return;
+        if (autoGet == null) return false;
         Bundle bundle = null;
         if (obj instanceof Activity) {
             bundle = ((Activity) obj).getIntent().getExtras();
         } else if (obj instanceof Fragment) {
             bundle = ((Fragment) obj).getArguments();
         }
-        if (bundle == null) return;
+        if (bundle == null) return true;
         if (viewModel != null) {
             obj = viewModel;
         }
@@ -49,7 +45,7 @@ public class AutoGetAnnPlugin implements FieldAnnBasePlugin {
                 Parcelable value = bundle.getParcelable(key);
                 if (value != null) {
                     field.set(obj, value);
-                    return;
+                    return true;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -67,7 +63,7 @@ public class AutoGetAnnPlugin implements FieldAnnBasePlugin {
                     }
                 } else {
                     field.set(obj, value);
-                    return;
+                    return true;
                 }
             }
         } catch (Exception e) {
@@ -85,6 +81,7 @@ public class AutoGetAnnPlugin implements FieldAnnBasePlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return true;
     }
 
 

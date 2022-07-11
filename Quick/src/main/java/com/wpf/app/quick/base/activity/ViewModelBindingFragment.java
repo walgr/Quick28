@@ -84,7 +84,7 @@ public abstract class ViewModelBindingFragment<VM extends BindingViewModel<VB>, 
             setViewModel(new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) getContext().getApplicationContext())).get(viewModelCls));
             QuickBind.bind(this, mViewModel);
             if (mViewModel != null) {
-                mViewModel.onBindingCreate(viewBinding);
+                mViewModel.onBindingCreated(viewBinding);
             }
         } else {
             setViewBinding();

@@ -20,10 +20,10 @@ import java.lang.reflect.Field;
 public class BindData2ViewAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
+    public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         try {
             BindData2View bindData2View = field.getAnnotation(BindData2View.class);
-            if (bindData2View == null) return;
+            if (bindData2View == null) return false;
             int bindId = bindData2View.id();
             Class<BindD2VHelper<View, Object>> helper = (Class<BindD2VHelper<View, Object>>) bindData2View.helper();
             Object viewParent = obj;
@@ -40,16 +40,18 @@ public class BindData2ViewAnnPlugin implements FieldAnnBasePlugin {
             }
             field.setAccessible(true);
             Object value = field.get(getRealObj(obj, viewModel));
-            if (findView == null || value == null) return;
+            if (findView == null || value == null) return true;
             BindD2VHelper<View, Object> bindBaseHelper = helper.newInstance();
             if (value instanceof RunOnHolder) {
                 bindBaseHelper.initView(findView, ((RunOnHolder<?>) value).run());
             } else {
                 bindBaseHelper.initView(findView, value);
             }
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public boolean parentClassIs(@NonNull Class<?> cur, @NonNull String parentName) {

@@ -17,9 +17,9 @@ import java.util.ArrayList;
 public class GroupViewAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
+    public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         GroupView groupViewA = field.getAnnotation(GroupView.class);
-        if (groupViewA == null) return;
+        if (groupViewA == null) return false;
         field.setAccessible(true);
         GroupViews groupViews = new GroupViews();
         ArrayList<Integer> R2IdList = getSaveIdList(obj, viewModel, field);
@@ -47,5 +47,6 @@ public class GroupViewAnnPlugin implements FieldAnnBasePlugin {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        return true;
     }
 }

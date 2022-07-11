@@ -1,7 +1,6 @@
 package com.wpf.app.quick28.model;
 
 import android.annotation.SuppressLint;
-import android.view.View;
 import android.widget.Toast;
 
 import com.wpf.app.quick.annotations.BindData2View;

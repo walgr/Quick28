@@ -87,5 +87,5 @@ public interface FieldAnnBasePlugin {
         return findView;
     }
 
-    void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field);
+    boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field);
 }

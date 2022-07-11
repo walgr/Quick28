@@ -20,34 +20,31 @@ import java.lang.reflect.Field;
 public class BindSp2ViewAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
-        setFieldView(obj, viewModel, field);
-    }
-
-    private void setFieldView(Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
+    public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         try {
             BindSp2View findViewA = field.getAnnotation(BindSp2View.class);
-            if (findViewA != null) {
-                field.setAccessible(true);
-                View findView = (View) field.get(obj);
-                if (findView instanceof TextView) {
-                    setTextViewValue(
-                            (TextView) findView,
-                            QuickBind.getBindSpFileName(),
-                            findViewA.bindSp(),
-                            findViewA.setSp(),
-                            findViewA.getSp(),
-                            findViewA.defaultValue());
-                }
-                if (viewModel != null) {
-                    field.set(viewModel, findView);
-                } else {
-                    field.set(obj, findView);
-                }
+            if (findViewA == null) return false;
+            field.setAccessible(true);
+            View findView = (View) field.get(obj);
+            if (findView instanceof TextView) {
+                setTextViewValue(
+                        (TextView) findView,
+                        QuickBind.getBindSpFileName(),
+                        findViewA.bindSp(),
+                        findViewA.setSp(),
+                        findViewA.getSp(),
+                        findViewA.defaultValue());
             }
+            if (viewModel != null) {
+                field.set(viewModel, findView);
+            } else {
+                field.set(obj, findView);
+            }
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     private void setTextViewValue(TextView textView, String spFileName, @NonNull String bindSpKey, @NonNull String setSpKey, @NonNull String getSpKey, String defaultValue) {

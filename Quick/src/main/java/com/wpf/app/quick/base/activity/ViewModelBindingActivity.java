@@ -52,7 +52,7 @@ public class ViewModelBindingActivity<VM extends BindingViewModel<VB>, VB extend
             setViewModel(new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(viewModelCls));
             QuickBind.bind(this, mViewModel);
             if (mViewModel != null) {
-                mViewModel.onBindingCreate(viewBinding);
+                mViewModel.onBindingCreated(viewBinding);
             }
         } else {
             setViewBinding();

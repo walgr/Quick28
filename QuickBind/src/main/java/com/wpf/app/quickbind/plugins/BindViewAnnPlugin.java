@@ -16,28 +16,24 @@ import java.lang.reflect.Field;
 public class BindViewAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
-        setFieldView(obj, viewModel, field);
-    }
-
-    private void setFieldView(Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
+    public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         try {
             BindView findViewA = field.getAnnotation(BindView.class);
-            if (findViewA != null) {
-                field.setAccessible(true);
-                if (field.get(getRealObj(obj, viewModel)) != null) {
-                    return;
-                }
-                View findView = findView(obj, findViewA.value());
-                if (viewModel != null) {
-                    field.set(viewModel, findView);
-                } else {
-                    field.set(obj, findView);
-                }
+            if (findViewA == null) return false;
+            field.setAccessible(true);
+            if (field.get(getRealObj(obj, viewModel)) != null) {
+                return true;
             }
+            View findView = findView(obj, findViewA.value());
+            if (viewModel != null) {
+                field.set(viewModel, findView);
+            } else {
+                field.set(obj, findView);
+            }
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
-
 }

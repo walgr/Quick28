@@ -19,7 +19,7 @@ public class MainViewModel extends BindingViewModel<ActivityMainBinding> {
     String title = "测试BindData2View";
 
     @Override
-    public void onBindingCreate(@Nullable ActivityMainBinding mViewBinding) {
+    public void onBindingCreated(@Nullable ActivityMainBinding mViewBinding) {
 
     }
 }

@@ -56,7 +56,7 @@ public class IntentDataTestViewModel extends BindingViewModel<ActivityDataTestBi
     TextView title;
 
     @Override
-    public void onBindingCreate(@Nullable ActivityDataTestBinding mViewBinding) {
+    public void onBindingCreated(@Nullable ActivityDataTestBinding mViewBinding) {
         printData();
     }
 

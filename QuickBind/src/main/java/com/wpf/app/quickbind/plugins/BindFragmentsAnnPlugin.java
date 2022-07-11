@@ -24,34 +24,35 @@ import java.util.List;
 public class BindFragmentsAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
+    public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         try {
             BindFragments bindFragmentsAnn = field.getAnnotation(BindFragments.class);
-            if (bindFragmentsAnn != null) {
-                field.setAccessible(true);
-                Object viewPagerObj = field.get(getRealObj(obj, viewModel));
-                if (viewPagerObj instanceof ViewPager) {
-                    ViewPager viewPager = (ViewPager) viewPagerObj;
-                    if (bindFragmentsAnn.limit() > 0) {
-                        viewPager.setOffscreenPageLimit(bindFragmentsAnn.limit());
-                    }
-                    FragmentManager fragmentManager = null;
-                    if (obj instanceof AppCompatActivity) {
-                        fragmentManager = ((AppCompatActivity) obj).getSupportFragmentManager();
-                    } else if (obj instanceof Fragment) {
-                        fragmentManager = ((Fragment) obj).getChildFragmentManager();
-                    }
-                    if (fragmentManager == null) return;
-                    if (bindFragmentsAnn.withState()) {
-                        viewPager.setAdapter(new FragmentsStateAdapter(fragmentManager, getFragment(obj, bindFragmentsAnn.fragments())));
-                    } else {
-                        viewPager.setAdapter(new FragmentsAdapter(fragmentManager, getFragment(obj, bindFragmentsAnn.fragments())));
-                    }
+            if (bindFragmentsAnn == null) return false;
+            field.setAccessible(true);
+            Object viewPagerObj = field.get(getRealObj(obj, viewModel));
+            if (viewPagerObj instanceof ViewPager) {
+                ViewPager viewPager = (ViewPager) viewPagerObj;
+                if (bindFragmentsAnn.limit() > 0) {
+                    viewPager.setOffscreenPageLimit(bindFragmentsAnn.limit());
+                }
+                FragmentManager fragmentManager = null;
+                if (obj instanceof AppCompatActivity) {
+                    fragmentManager = ((AppCompatActivity) obj).getSupportFragmentManager();
+                } else if (obj instanceof Fragment) {
+                    fragmentManager = ((Fragment) obj).getChildFragmentManager();
+                }
+                if (fragmentManager == null) return true;
+                if (bindFragmentsAnn.withState()) {
+                    viewPager.setAdapter(new FragmentsStateAdapter(fragmentManager, getFragment(obj, bindFragmentsAnn.fragments())));
+                } else {
+                    viewPager.setAdapter(new FragmentsAdapter(fragmentManager, getFragment(obj, bindFragmentsAnn.fragments())));
                 }
             }
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     private List<? extends BindBaseFragment> getFragment(Object obj, Class<? extends BindBaseFragment>[] fragmentClsArray) {

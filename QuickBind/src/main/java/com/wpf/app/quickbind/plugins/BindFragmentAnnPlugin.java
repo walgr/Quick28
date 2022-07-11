@@ -25,10 +25,10 @@ import java.util.HashMap;
 public class BindFragmentAnnPlugin implements FieldAnnBasePlugin {
 
     @Override
-    public void dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
+    public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {
         try {
             BindFragment bindFragmentAnn = field.getAnnotation(BindFragment.class);
-            if (bindFragmentAnn != null) {
+            if (bindFragmentAnn == null) return false;
                 field.setAccessible(true);
                 Object viewPagerObj = field.get(getRealObj(obj, viewModel));
                 if (viewPagerObj instanceof ViewPager) {
@@ -42,7 +42,7 @@ public class BindFragmentAnnPlugin implements FieldAnnBasePlugin {
                     } else if (obj instanceof Fragment) {
                         fragmentManager = ((Fragment) obj).getChildFragmentManager();
                     }
-                    if (fragmentManager == null) return;
+                    if (fragmentManager == null) return true;
                     if (bindFragmentAnn.withState()) {
                         viewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
                             private final HashMap<Integer, BindBaseFragment> mBaseFragmentList = new HashMap<>();
@@ -155,9 +155,10 @@ public class BindFragmentAnnPlugin implements FieldAnnBasePlugin {
                         });
                     }
                 }
-            }
+                return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 }

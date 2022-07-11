@@ -68,19 +68,10 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
     public QuickViewHolder<QuickItemData> onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         QuickItemData findData = findDataByViewType(i);
         if (findData instanceof QuickViewDataBinding) {
-            BindLayout holderAnnotationLayout = findData.getClass().getAnnotation(BindLayout.class);
-            if (holderAnnotationLayout != null) {
-                QuickViewBindingHolder bindingHolder = new QuickViewBindingHolder(
-                        viewGroup, holderAnnotationLayout.value()
-                );
-                bindingHolder.setViewData((QuickViewDataBinding) findData);
-                bindingHolder.onCreateViewHolder(bindingHolder.itemView);
-                return bindingHolder;
-            }
-            BindHolder holderAnnotationClass = findData.getClass().getAnnotation(BindHolder.class);
+            BindBindingHolder holderAnnotationClass = findData.getClass().getAnnotation(BindBindingHolder.class);
             if (holderAnnotationClass != null) {
                 try {
-                    Constructor<?> bindingHolderCls = holderAnnotationClass.holderClass().getConstructor(ViewGroup.class);
+                    Constructor<?> bindingHolderCls = holderAnnotationClass.value().getConstructor(ViewGroup.class);
                     QuickViewBindingHolder bindingHolder = (QuickViewBindingHolder) bindingHolderCls.newInstance(viewGroup);
                     bindingHolder.setViewData((QuickViewDataBinding) findData);
                     bindingHolder.onCreateViewHolder(bindingHolder.itemView);
@@ -91,7 +82,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
             }
         }
         if (findData != null) {
-            HolderClass holderAnnotation = findData.getClass().getAnnotation(HolderClass.class);
+            BindHolder holderAnnotation = findData.getClass().getAnnotation(BindHolder.class);
             QuickViewHolder<? extends QuickItemData> holder = null;
 
             if (holderAnnotation == null) {
@@ -102,7 +93,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
                 }
             } else {
                 try {
-                    Class<?> holderCls = holderAnnotation.holderClass();
+                    Class<?> holderCls = holderAnnotation.value();
                     Constructor<?> holderConstructor = holderCls.getConstructor(ViewGroup.class);
                     holder = (QuickViewHolder<? extends QuickItemData>) holderConstructor.newInstance(viewGroup);
                 } catch (Exception e) {

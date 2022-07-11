@@ -1,15 +1,16 @@
 package com.wpf.app.quick.base.widgets.recyclerview;
 
-/**
- * Created by 王朋飞 on 2022/5/20.
- */
+import android.databinding.ViewDataBinding;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Created by 王朋飞 on 2022/5/20.
+ */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface HolderClass {
-    Class<? extends QuickViewHolder<? extends QuickItemData>> holderClass();
+public @interface BindBindingHolder {
+    Class<? extends QuickViewBindingHolder<? extends QuickViewDataBinding<? extends ViewDataBinding>, ? extends ViewDataBinding>> value();
 }

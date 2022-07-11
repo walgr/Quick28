@@ -43,6 +43,9 @@ public class QuickBind {
     private static String bindSpFileName = "QuickViewSpBindFile";
 
     private static final ArrayList<FieldAnnBasePlugin> plugins = new ArrayList<>();
+    public static final ArrayList<FieldAnnBasePlugin> bindPlugin = new ArrayList<FieldAnnBasePlugin>() {{
+        add(new BindData2ViewAnnPlugin());
+    }};
 
     public static <T extends FieldAnnBasePlugin> void registerPlugin(T plugin) {
         plugins.add(plugin);
@@ -65,7 +68,7 @@ public class QuickBind {
 
     public static void bind(@NonNull Activity activity, ViewModel viewModel) {
         bindBinder(activity, activity.getWindow().getDecorView());
-        dealAllField(activity, viewModel);
+        dealInPlugins(activity, viewModel);
     }
 
     public static void bind(@NonNull Fragment fragment) {
@@ -76,17 +79,17 @@ public class QuickBind {
         if (fragment.getView() != null) {
             bindBinder(fragment, fragment.getView());
         }
-        dealAllField(fragment, viewModel);
+        dealInPlugins(fragment, viewModel);
     }
 
     public static void bind(@NonNull RecyclerView.ViewHolder viewHolder) {
         bindBinder(viewHolder, viewHolder.itemView);
-        dealAllField(viewHolder, null);
+        dealInPlugins(viewHolder, null);
     }
 
     public static void bind(@NonNull Dialog dialog) {
         bindBinder(dialog, dialog.getWindow().getDecorView());
-        dealAllField(dialog, null);
+        dealInPlugins(dialog, null);
     }
 
     public static final Map<Class<?>, Databinder> BINDEDMAP = new LinkedHashMap<>();
@@ -148,24 +151,30 @@ public class QuickBind {
         return bindingCtor;
     }
 
-    public static void dealAllField(Object obj, ViewModel viewModel) {
-        dealAllField(obj, viewModel, plugins);
+    public static void dealInPlugins(Object obj, ViewModel viewModel) {
+        dealInPlugins(obj, viewModel, plugins);
     }
 
-    public static void dealAllField(Object obj, ViewModel viewModel, ArrayList<FieldAnnBasePlugin> plugins) {
+    public static void dealInPlugins(Object obj, ViewModel viewModel, ArrayList<FieldAnnBasePlugin> plugins) {
         if (obj == null) return;
         try {
             List<Field> fields = ReflectHelper.getFieldWithParent(obj);
             for (Field field : fields) {
                 for (FieldAnnBasePlugin plugin : plugins) {
-                    plugin.dealField(obj, null, field);
+                    boolean result = plugin.dealField(obj, null, field);
+                    if (result) {
+                        break;
+                    }
                 }
             }
             if (viewModel != null) {
                 List<Field> viewModelFields = ReflectHelper.getFieldWithParent(viewModel);
                 for (Field field : viewModelFields) {
                     for (FieldAnnBasePlugin plugin : plugins) {
-                        plugin.dealField(obj, viewModel, field);
+                        boolean result = plugin.dealField(obj, viewModel, field);
+                        if (result) {
+                            break;
+                        }
                     }
                 }
             }

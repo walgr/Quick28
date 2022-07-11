@@ -70,7 +70,7 @@ class QuickPlugin : Plugin<Project> {
           val rFile =
               project.files(
                   when (processResources) {
-                    is GenerateLibraryRFileTask -> processResources.textSymbolOutputFile
+                    is GenerateLibraryRFileTask -> processResources.getTextSymbolOutputFile()
                     is LinkApplicationAndroidResourcesTask -> processResources.getTextSymbolOutputFile()
                     else -> throw RuntimeException(
                         "Minimum supported Android Gradle Plugin is 3.3.0")

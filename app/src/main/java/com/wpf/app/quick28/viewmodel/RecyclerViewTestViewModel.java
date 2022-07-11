@@ -17,7 +17,7 @@ import java.util.function.Function;
 public class RecyclerViewTestViewModel extends BindingViewModel<ActivityRecyclerviewTestBinding> {
 
     @Override
-    public void onBindingCreate(@Nullable ActivityRecyclerviewTestBinding mViewBinding) {
+    public void onBindingCreated(@Nullable ActivityRecyclerviewTestBinding mViewBinding) {
 
     }
 

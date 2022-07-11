@@ -2,7 +2,7 @@ package com.wpf.app.quick28.model;
 
 import android.arch.lifecycle.MutableLiveData;
 
-import com.wpf.app.quick.base.widgets.recyclerview.BindHolder;
+import com.wpf.app.quick.base.widgets.recyclerview.BindBindingHolder;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickViewDataBinding;
 import com.wpf.app.quick28.adapterholder.TestHolder3;
 import com.wpf.app.quick28.databinding.HolderTest3Binding;
@@ -10,7 +10,7 @@ import com.wpf.app.quick28.databinding.HolderTest3Binding;
 /**
  * Created by 王朋飞 on 2022/6/13.
  */
-@BindHolder(holderClass = TestHolder3.class)
+@BindBindingHolder(TestHolder3.class)
 public class TestModel3 extends QuickViewDataBinding<HolderTest3Binding> {
 
     MutableLiveData<String> text;
