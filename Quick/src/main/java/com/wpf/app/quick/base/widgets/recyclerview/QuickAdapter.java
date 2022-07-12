@@ -101,6 +101,9 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickViewHolder<QuickItem
                 }
             }
             holder.onCreateViewHolder(holder.itemView);
+//            if (findData instanceof QuickBindData) {
+//                ((QuickBindData) findData).onCreateViewHolder((QuickViewHolder<? extends QuickBindData>)holder);
+//            }
             return (QuickViewHolder<QuickItemData>) holder;
         }
         return null;

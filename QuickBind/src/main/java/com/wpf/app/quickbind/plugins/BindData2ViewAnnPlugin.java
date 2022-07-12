@@ -9,7 +9,7 @@ import android.view.View;
 import com.wpf.app.quick.annotations.BindD2VHelper;
 import com.wpf.app.quick.annotations.BindData2View;
 import com.wpf.app.quick.annotations.internal.Constants;
-import com.wpf.app.quickbind.interfaces.RunOnHolder;
+import com.wpf.app.quickbind.interfaces.runOnHolder;
 import com.wpf.app.quickbind.utils.ReflectHelper;
 
 import java.lang.reflect.Field;
@@ -42,8 +42,8 @@ public class BindData2ViewAnnPlugin implements FieldAnnBasePlugin {
             Object value = field.get(getRealObj(obj, viewModel));
             if (findView == null || value == null) return true;
             BindD2VHelper<View, Object> bindBaseHelper = helper.newInstance();
-            if (value instanceof RunOnHolder) {
-                bindBaseHelper.initView(findView, ((RunOnHolder<?>) value).run());
+            if (value instanceof runOnHolder) {
+                bindBaseHelper.initView(findView, ((runOnHolder<View, ?>) value).run(findView));
             } else {
                 bindBaseHelper.initView(findView, value);
             }

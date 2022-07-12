@@ -5,7 +5,7 @@ import android.view.View;
 /**
  * Created by 王朋飞 on 2022/7/8.
  */
-public interface RunItemClick extends RunOnHolder<View.OnClickListener> {
+public interface runOnHolder<V extends View, Data> {
 
-    View.OnClickListener run();
+    Data run(V view);
 }

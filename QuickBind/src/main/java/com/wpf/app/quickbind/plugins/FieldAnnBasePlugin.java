@@ -87,5 +87,8 @@ public interface FieldAnnBasePlugin {
         return findView;
     }
 
+    /**
+     * @return 是否已经处理过
+     */
     boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field);
 }

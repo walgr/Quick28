@@ -9,7 +9,7 @@ import com.wpf.app.quick.base.activity.QuickActivity;
 import com.wpf.app.quick.base.helper.binddatahelper.ItemClick;
 import com.wpf.app.quick.base.widgets.recyclerview.QuickRecyclerView;
 import com.wpf.app.quick28.model.SelectItem;
-import com.wpf.app.quickbind.interfaces.RunItemClick;
+import com.wpf.app.quickbind.interfaces.runItemClick;
 
 /**
  * Created by 王朋飞 on 2022/7/8.
@@ -20,11 +20,13 @@ public class SelectListTestActivity extends QuickActivity {
     @BindView(R.id.list)
     QuickRecyclerView list;
 
+    @SuppressLint("NonConstantResourceId")
     @BindData2View(id = R.id.btnClean, helper = ItemClick.class)
-    RunItemClick btnClean = () -> this::clean;
+    runItemClick btnClean = () -> this::clean;
 
+    @SuppressLint("NonConstantResourceId")
     @BindData2View(id = R.id.btnAdd, helper = ItemClick.class)
-    RunItemClick btnAdd = () -> this::addMessage;
+    runItemClick btnAdd = () -> this::addMessage;
 
     public SelectListTestActivity() {
         super(R.layout.activity_recyclerview_test, "选择列表页");
@@ -41,6 +43,6 @@ public class SelectListTestActivity extends QuickActivity {
 
     public void addMessage(View view) {
         list.getQuickAdapter().addData(new SelectItem());
-        list.getQuickAdapter().notifyDataSetChanged();
+        list.getQuickAdapter().notifyItemInserted(list.getQuickAdapter().getItemCount());
     }
 }

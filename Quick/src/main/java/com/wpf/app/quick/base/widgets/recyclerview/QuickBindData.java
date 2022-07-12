@@ -3,6 +3,8 @@ package com.wpf.app.quick.base.widgets.recyclerview;
 import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.View;
 
 import com.wpf.app.quickbind.QuickBind;
 
