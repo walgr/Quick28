@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by 王朋飞 on 2022/7/6.
  */
-public class GroupViewAnnPlugin implements FieldAnnBasePlugin {
+public class GroupViewAnnPlugin implements BasePlugin {
 
     @Override
     public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {

@@ -1,4 +1,4 @@
-package com.wpf.app.quick.annotations;
+package com.wpf.app.quickbind.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

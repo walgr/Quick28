@@ -13,22 +13,22 @@ import android.view.View;
 public class NoScrollBottomSheetBehavior<V extends View> extends BottomSheetBehavior<V> {
 
     @Override
-    public boolean onInterceptTouchEvent(CoordinatorLayout parent, View child, MotionEvent event) {
+    public boolean onInterceptTouchEvent(CoordinatorLayout parent, V child, MotionEvent event) {
         return false;
     }
 
     @Override
-    public boolean onTouchEvent(CoordinatorLayout parent, View child, MotionEvent event) {
+    public boolean onTouchEvent(CoordinatorLayout parent, V child, MotionEvent event) {
         return false;
     }
 
     @Override
-    public boolean onNestedPreFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY) {
+    public boolean onNestedPreFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull V child, @NonNull View target, float velocityX, float velocityY) {
         return false;
     }
 
     @Override
-    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
+    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull V child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
         return false;
     }
 }

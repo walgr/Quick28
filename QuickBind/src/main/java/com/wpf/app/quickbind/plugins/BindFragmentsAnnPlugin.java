@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by 王朋飞 on 2022/6/15.
  */
-public class BindFragmentsAnnPlugin implements FieldAnnBasePlugin {
+public class BindFragmentsAnnPlugin implements BasePlugin {
 
     @Override
     public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {

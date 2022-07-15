@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 /**
  * Created by 王朋飞 on 2022/6/17.
  */
-public class LoadSpPlugin implements FieldAnnBasePlugin {
+public class LoadSpPlugin implements BasePlugin {
 
     @Override
     public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {

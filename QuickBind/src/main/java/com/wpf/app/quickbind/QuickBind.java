@@ -12,22 +12,31 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.wpf.app.quick.annotations.BindData2View;
+import com.wpf.app.quick.annotations.BindView;
+import com.wpf.app.quick.annotations.GroupView;
 import com.wpf.app.quick.runtime.Databinder;
+import com.wpf.app.quickbind.annotations.AutoGet;
+import com.wpf.app.quickbind.annotations.BindFragment;
+import com.wpf.app.quickbind.annotations.BindFragments;
+import com.wpf.app.quickbind.annotations.BindSp2View;
+import com.wpf.app.quickbind.annotations.LoadSp;
 import com.wpf.app.quickbind.plugins.AutoGetAnnPlugin;
 import com.wpf.app.quickbind.plugins.BindData2ViewAnnPlugin;
 import com.wpf.app.quickbind.plugins.BindFragmentAnnPlugin;
 import com.wpf.app.quickbind.plugins.BindFragmentsAnnPlugin;
 import com.wpf.app.quickbind.plugins.BindViewAnnPlugin;
-import com.wpf.app.quickbind.plugins.FieldAnnBasePlugin;
+import com.wpf.app.quickbind.plugins.BasePlugin;
 import com.wpf.app.quickbind.plugins.BindSp2ViewAnnPlugin;
 import com.wpf.app.quickbind.plugins.GroupViewAnnPlugin;
 import com.wpf.app.quickbind.plugins.LoadSpPlugin;
 import com.wpf.app.quickbind.utils.ReflectHelper;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,24 +51,26 @@ public class QuickBind {
 
     private static String bindSpFileName = "QuickViewSpBindFile";
 
-    private static final ArrayList<FieldAnnBasePlugin> plugins = new ArrayList<>();
-    public static final ArrayList<FieldAnnBasePlugin> bindPlugin = new ArrayList<FieldAnnBasePlugin>() {{
-        add(new BindData2ViewAnnPlugin());
+    private static final HashMap<Class<? extends Annotation>, BasePlugin> plugins = new HashMap<>();
+
+    public static final HashMap<Class<? extends Annotation>, BasePlugin> bindPlugin
+            = new HashMap<Class<? extends Annotation>, BasePlugin>() {{
+        put(BindData2View.class, new BindData2ViewAnnPlugin());
     }};
 
-    public static <T extends FieldAnnBasePlugin> void registerPlugin(T plugin) {
-        plugins.add(plugin);
+    public static <T extends BasePlugin> void registerPlugin(Class<? extends Annotation> annCls, T plugin) {
+        plugins.put(annCls, plugin);
     }
 
     static {
-        registerPlugin(new BindViewAnnPlugin());
-        registerPlugin(new GroupViewAnnPlugin());
-        registerPlugin(new AutoGetAnnPlugin());
-        registerPlugin(new BindSp2ViewAnnPlugin());
-        registerPlugin(new LoadSpPlugin());
-        registerPlugin(new BindFragmentsAnnPlugin());
-        registerPlugin(new BindFragmentAnnPlugin());
-        registerPlugin(new BindData2ViewAnnPlugin());
+        registerPlugin(BindView.class, new BindViewAnnPlugin());
+        registerPlugin(GroupView.class, new GroupViewAnnPlugin());
+        registerPlugin(AutoGet.class, new AutoGetAnnPlugin());
+        registerPlugin(BindSp2View.class, new BindSp2ViewAnnPlugin());
+        registerPlugin(LoadSp.class, new LoadSpPlugin());
+        registerPlugin(BindFragments.class, new BindFragmentsAnnPlugin());
+        registerPlugin(BindFragment.class, new BindFragmentAnnPlugin());
+        registerPlugin(BindData2View.class, new BindData2ViewAnnPlugin());
     }
 
     public static void bind(@NonNull Activity activity) {
@@ -155,25 +166,25 @@ public class QuickBind {
         dealInPlugins(obj, viewModel, plugins);
     }
 
-    public static void dealInPlugins(Object obj, ViewModel viewModel, ArrayList<FieldAnnBasePlugin> plugins) {
+    public static void dealInPlugins(Object obj, ViewModel viewModel, HashMap<Class<? extends Annotation>, BasePlugin> plugins) {
         if (obj == null) return;
         try {
             List<Field> fields = ReflectHelper.getFieldWithParent(obj);
             for (Field field : fields) {
-                for (FieldAnnBasePlugin plugin : plugins) {
-                    boolean result = plugin.dealField(obj, null, field);
-                    if (result) {
-                        break;
+                for (Annotation annotation : field.getAnnotations()) {
+                    BasePlugin basePlugin  = plugins.get(annotation.getClass());
+                    if (basePlugin != null) {
+                        basePlugin.dealField(obj, null, field);
                     }
                 }
             }
             if (viewModel != null) {
                 List<Field> viewModelFields = ReflectHelper.getFieldWithParent(viewModel);
                 for (Field field : viewModelFields) {
-                    for (FieldAnnBasePlugin plugin : plugins) {
-                        boolean result = plugin.dealField(obj, viewModel, field);
-                        if (result) {
-                            break;
+                    for (Annotation annotation : field.getAnnotations()) {
+                        BasePlugin basePlugin  = plugins.get(annotation.getClass());
+                        if (basePlugin != null) {
+                            basePlugin.dealField(obj, null, field);
                         }
                     }
                 }

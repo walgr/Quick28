@@ -20,7 +20,7 @@ public class DialogSizeHelper {
                 windowParams.width = dealDialogWidth(dialog, dialog.initDialogWidthPercent() != DialogSize.NO_SET ? (int) (dialog.getNewWidth() * dialog.initDialogWidthPercent()) : dialogWidth);
             }
             if (dialog.getNewHeight() != DialogSize.NO_SET) {
-                windowParams.height = dealDialogHeight(dialog, dialog.initDialogHeightPercent() != DialogSize.NO_SET ? (int) (dialog.getScreenHeight() * dialog.initDialogHeightPercent()) : dialogHeight);
+                windowParams.height = dealDialogHeight(dialog, dialog.initDialogHeightPercent() != DialogSize.NO_SET ? (int) (dialog.getNewHeight() * dialog.initDialogHeightPercent()) : dialogHeight);
             }
         } else {
             windowParams.gravity = dialog.initDialogGravity();

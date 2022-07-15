@@ -17,7 +17,7 @@ import java.lang.reflect.Field;
 /**
  * Created by 王朋飞 on 2022/7/6.
  */
-public class BindData2ViewAnnPlugin implements FieldAnnBasePlugin {
+public class BindData2ViewAnnPlugin implements BasePlugin {
 
     @Override
     public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {

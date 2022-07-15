@@ -22,7 +22,7 @@ import java.util.HashMap;
 /**
  * Created by 王朋飞 on 2022/6/15.
  */
-public class BindFragmentAnnPlugin implements FieldAnnBasePlugin {
+public class BindFragmentAnnPlugin implements BasePlugin {
 
     @Override
     public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {

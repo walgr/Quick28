@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.wpf.app.quick.runtime.Databinder;
-import com.wpf.app.quick.runtime.internal.Utils;
 import com.wpf.app.quickbind.QuickBind;
 
 import java.lang.reflect.Field;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
  * Created by 王朋飞 on 2022/6/15.
  * 处理有注解的属性
  */
-public interface FieldAnnBasePlugin {
+public interface BasePlugin {
 
     default @NonNull Object getRealObj(@NonNull Object obj, @Nullable ViewModel viewModel) {
         if (viewModel != null) return viewModel;

@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
  * Created by 王朋飞 on 2022/6/15.
  * 给主工程R使用
  */
-public class BindViewAnnPlugin implements FieldAnnBasePlugin {
+public class BindViewAnnPlugin implements BasePlugin {
 
     @Override
     public boolean dealField(@NonNull Object obj, @Nullable ViewModel viewModel, @NonNull Field field) {

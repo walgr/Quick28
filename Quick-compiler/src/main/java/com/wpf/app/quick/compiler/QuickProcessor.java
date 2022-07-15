@@ -397,8 +397,8 @@ public final class QuickProcessor extends AbstractProcessor {
         TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
 
         // Start by verifying common generated code restrictions.
-        boolean hasError = isInaccessibleViaGeneratedCode(BindView.class, "fields", element)
-                || isBindingInWrongPackage(BindView.class, element);
+//        boolean hasError = isInaccessibleViaGeneratedCode(BindView.class, "fields", element)
+//                || isBindingInWrongPackage(BindView.class, element);
 
         // Verify that the target type extends from View.
         TypeMirror elementType = element.asType();
@@ -416,13 +416,13 @@ public final class QuickProcessor extends AbstractProcessor {
             } else {
                 error(element, "@%s fields must extend from View or be an interface. (%s.%s)",
                         BindView.class.getSimpleName(), qualifiedName, simpleName);
-                hasError = true;
+//                hasError = true;
             }
         }
 
-        if (hasError) {
-            return;
-        }
+//        if (hasError) {
+//            return;
+//        }
 
         // Assemble information on the field.
         int id = element.getAnnotation(BindView.class).value();

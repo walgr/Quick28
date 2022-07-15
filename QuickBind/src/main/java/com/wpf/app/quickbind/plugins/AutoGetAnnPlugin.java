@@ -7,7 +7,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
-import com.wpf.app.quick.annotations.AutoGet;
+import com.wpf.app.quickbind.annotations.AutoGet;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by 王朋飞 on 2022/6/15.
  */
-public class AutoGetAnnPlugin implements FieldAnnBasePlugin {
+public class AutoGetAnnPlugin implements BasePlugin {
 
     @Override
     public boolean dealField(@NonNull Object obj, ViewModel viewModel, @NonNull Field field) {
